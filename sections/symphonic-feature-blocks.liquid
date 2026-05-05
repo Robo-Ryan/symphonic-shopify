@@ -1,0 +1,213 @@
+{%- assign block_count = 0 -%}
+<style type="text/css">
+    #shopify-section-{{ section.id }} {
+        padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+      }
+      @media (min-width: 741px) {
+        #shopify-section-{{ section.id }} {
+          padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+        }
+      }
+</style>
+<div class="container">
+    {%- if section.settings.title != blank -%}
+    <h2 class="h1 m-h3">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    <div class="featured-blocks__slider">
+        
+        {%- if product.metafields.custom.featured_blocks != blank -%}
+            {%- for featured_block in product.metafields.custom.featured_blocks.value -%}
+            <div class="featured-blocks__slide">
+                {%- if featured_block.image != blank -%}
+                <div class="featured-blocks__img">
+                    {{- featured_block.image | image_url: width: featured_block.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                </div>
+                {%- endif -%}
+                {%- if featured_block.title != blank -%}
+                <div class="featured-blocks__title h3 m-h5">
+                    {{ featured_block.title | newline_to_br }}
+                </div>
+                {%- endif -%}
+                {%- if featured_block.description != blank -%}
+                    {% assign featured_block_description = featured_block.description | metafield_tag %}
+                <div class="featured-blocks__desc{% if section.settings.scroll_content %} featured-blocks__desc--overflow{% endif %}">
+                    <div class="featured-blocks__desc-content">
+                    {{ featured_block_description | replace: 'BioA3', 'BioA<sup>3</sup>' }}
+                    </div>
+                </div>
+                {%- endif -%}
+                {%- if featured_block.cta_text != blank and featured_block.cta_link != blank -%}
+                <div class="featured-blocks__desc">
+                    <a href="{{ featured_block.cta_link }}" class="button button--outline">{{ featured_block.cta_text }}</a>
+                </div>
+                {%- endif -%}
+            </div>
+            {%- assign block_count = block_count | plus: 1 -%}
+            {%- endfor -%}
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+        <div class="featured-blocks__slide">
+            {%- if block.settings.image != blank -%}
+            <div class="featured-blocks__img">
+                {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            </div>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+            <div class="featured-blocks__title h3 m-h5">
+                {{ block.settings.title | newline_to_br }}
+            </div>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+            <div class="featured-blocks__desc{% if section.settings.scroll_content %} featured-blocks__desc--overflow{% endif %}">
+                <div class="featured-blocks__desc-content">
+                {{ block.settings.description | replace: 'BioA3', 'BioA<sup>3</sup>' }}
+                </div>
+            </div>
+            {%- endif -%}
+            {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
+            <div class="featured-blocks__desc">
+                <a href="{{ block.settings.link_url }}" class="button button--outline">{{ block.settings.link_text }}</a>
+            </div>
+            {%- endif -%}
+        </div>
+        {%- assign block_count = block_count | plus: 1 -%}
+        {%- endfor -%}
+    </div>
+    {%- if block_count > 1 -%}
+        {%- if section.settings.pagination_style == 'circled_arrows' -%}
+            {%- assign left_arrow = 'circle-arrow-left' -%}
+            {%- assign right_arrow = 'circle-arrow-right' -%}
+        {%- else -%}
+            {%- assign left_arrow = 'arrow-left' -%}
+            {%- assign right_arrow = 'arrow-right' -%}
+        {%- endif -%}
+    <div class="featured-blocks__slider-nav featured-blocks__slider-nav--{{ section.settings.pagination_style}}{% unless block_count > 3 %} hidden-tablet-and-up{% endunless %}">
+        
+        <button class="featured-blocks__pagination-btn featured-blocks__pagination-btn--prev" aria-label="Previous">{%- render 'symphonic-icon' with left_arrow, width: 39, height: 39 -%}</button>
+        <button class="featured-blocks__pagination-btn featured-blocks__pagination-btn--next" aria-label="Next">{%- render 'symphonic-icon' with right_arrow, width: 39, height: 39 -%}</button>
+    </div>
+    {%- endif -%}
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Featured Blocks",
+        "class": "featured-blocks",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "select",
+                "id": "pagination_style",
+                "label": "Pagination Style",
+                "options": [
+                    {
+                    "value": "arrows",
+                    "label": "Arrows"
+                    },
+                    {
+                    "value": "circled_arrows",
+                    "label": "Circled arrows"
+                    }
+                ]
+            },
+            {
+                "type": "checkbox",
+                "id": "scroll_content",
+                "label": "Scroll content",
+                "default": false
+            },
+            {
+                "type": "header",
+                "content": "Desktop Spacing"
+            },
+            {
+                "type": "range",
+                "id": "desktop_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "desktop_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            },
+            {
+                "type": "header",
+                "content": "Mobile Spacing"
+            },
+            {
+                "type": "range",
+                "id": "mobile_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "mobile_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            }
+        ],
+        "blocks": [
+            {
+                "type": "featured-block",
+                "name": "Featured Block",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "description",
+                        "label": "Description",
+                        "default": "<p></p>"
+                    },
+                    {
+                        "type": "text",
+                        "id": "link_text",
+                        "label": "CTA Text"
+                    },
+                    {
+                        "type": "url",
+                        "id": "link_url",
+                        "label": "CTA Link"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Featured Blocks",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

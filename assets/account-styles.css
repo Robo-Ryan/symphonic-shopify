@@ -1,0 +1,157 @@
+.tp-login{
+    margin-inline: unset;
+    max-width: 1440px;
+}
+
+.account__block-list.account-flex_row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+.account__block-list.account-flex_row > *{
+    flex: 2;
+    border-block: 1px solid #000;
+    padding-block: 2rem;
+}
+.account__block-list.account-flex_row > *:nth-child(2){
+    border-block: unset!important;
+    width: 20%;
+    padding-block: 0;
+    flex: 1;
+}
+.signup-wrapper p{
+    margin-bottom: 2rem;
+}
+.icon-container{
+    display: flex;
+    justify-content: center;
+}
+.icon-container svg path{
+    stroke-width: 1px;
+    stroke: #2CBE05
+}
+.tp-login .input.remember-me{
+flex-direction: row;
+align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    color: #000;
+    transition: .3s ease-in-out;
+}
+/* .tp-login .input.remember-me .input-preheader{
+ color: #000;
+ transition: .3s ease-in-out;
+}
+.tp-login .input.remember-me.active .input-preheader{
+    color: #2CBE05;
+    transition: .3s ease-in-out;
+}
+.input.remember-me.active{
+    color: #2CBE05;
+    transition: .3s ease-in-out;
+}
+.input.active.remember-me .input-preheader::before{
+    background: #2CBE05;
+} */
+.icon-container_plus{
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    aspect-ratio: 1;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+}
+.icon-container_plus svg {
+    rotate: revert;
+    transition: all .3s ease-in-out;
+}
+#remember-me-checkbox{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+#remember-me-checkbox:checked{
+    margin: 1em;
+}
+.icon-container_plus svg path {
+    stroke: #000;
+    transition: all .3s ease-in-out;
+}
+
+.tp-login .input.remember-me.active .icon-container_plus svg {
+
+    rotate: 45deg;
+    transition: all .3s ease-in-out;
+}
+.tp-login .input.remember-me.active .icon-container_plus svg path:first-child{
+    stroke: #2CBE05;
+}
+.tp-login .input.remember-me.active .icon-container_plus svg path {
+    stroke: #2CBE05;
+    transition: all .3s ease-in-out;
+    transition-timing-function: ease-in-out; /* Add this line to match the timing function of the fill property */
+}
+.tp-login .input.remember-me .input-preheader{
+    margin-block: 0;
+}
+.form-header{
+    text-align: left;
+    font-size: var(--heading-h3-font-size);
+    text-transform: uppercase;
+    line-height: 1em!important;
+    width: 85%;
+    margin-bottom: 3rem
+}
+.input-preheader{
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-block: 1em;
+    display: block;
+}
+.input-preheader::before{
+    content: "";
+    display: inline-flex;
+    width: auto;
+    vertical-align: middle;
+    height: calc(var(--heading-h6-font-size) - .4em);
+    aspect-ratio: 1/1;
+    background: #000;
+    margin-right: .5rem;
+    border-radius: 50%;
+}
+.tp-login .input {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding-block:1em;
+
+}
+.tp-login .input label{
+    display: none;
+}
+.button--primary{
+    border: 1px solid #000;
+}
+@media screen and (max-width: 990px) {
+    .account__block-list.account-flex_row{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .account__block-list.account-flex_row > *{
+        flex: 1;
+        border-block: 1px solid #000;
+        padding-block: 2rem;
+        width: 100%;
+    }
+    .account__block-list.account-flex_row > *:nth-child(2){
+        border-block: unset!important;
+        width: 100%;
+        padding-block: 2rem;
+    }
+    
+}

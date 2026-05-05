@@ -1,0 +1,182 @@
+<style type="text/css">
+#shopify-section-{{ section.id }}.featured-carousel {
+    padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+  }
+  @media (min-width: 741px) {
+    #shopify-section-{{ section.id }}.featured-carousel {
+      padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+    }
+  }
+</style>
+
+<div class="container">
+    <div class="featured-carousel__container featured-carousel__container--{{ section.settings.layout }}">
+        <ul class="featured-carousel__tabs">
+            {%- for block in section.blocks -%}
+            <li class="featured-carousel__tab{% if forloop.index0 == 0 %} featured-carousel__tab--active{% endif %} s4" data-tab="{{ forloop.index0 }}">{{ block.settings.tab | replace: "BIOA3", "BioA<sup>3</sup>" | replace: "BioA3", "BioA<sup>3</sup>" }}</li>
+            {%- endfor -%}
+        </ul>
+        <div class="featured-carousel__slider">
+            {%- for block in section.blocks -%}
+            {%- capture carousel_img -%}
+                <div class="featured-carousel__slide-img">
+                    {%- if block.settings.image != blank -%}
+                        {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                    {%- else -%}
+                        {{- 'image' | placeholder_svg_tag: "bordered" -}}
+                    {%- endif -%}
+                </div>
+            {%- endcapture -%}
+            {%- capture carousel_desc -%}
+                <div class="featured-carousel__slide-description featured-carousel__slide-description--{{ block.settings.text_width }}">
+                    {{ block.settings.description | replace: "BIOA3", "BioA<sup>3</sup>" | replace: "BioA3", "BioA<sup>3</sup>" }}
+                </div>
+            {%- endcapture -%}
+            <div class="featured-carousel__slide">
+                <div class="featured-carousel__slide-copy gsap-pin-element">
+                    <div class="featured-carousel__slide-name s4">{{ block.settings.tab }}</div>
+                    <h3 class="h3 m-h5 featured-carousel__slide-title">{{ block.settings.title }}</h3>
+                    {%- if section.settings.layout == 'layout-2' -%}
+                        {{ carousel_img }}
+                    {%- else -%}
+                        {{ carousel_desc }}
+                    {%- endif -%}
+                </div>
+                {%- if section.settings.layout == 'layout-2' -%}
+                    {{ carousel_desc }}
+                {%- else -%}
+                    {{ carousel_img }}
+                {%- endif -%}
+            </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+</script>
+    
+{% schema %}
+    {
+        "name": "SMD - Featured Carousel",
+        "class": "featured-carousel",
+        "settings": [
+            {
+                "type": "select",
+                "id": "layout",
+                "label": "Layout",
+                "options": [
+                    {
+                    "value": "layout-1",
+                    "label": "Layout 1"
+                    },
+                    {
+                    "value": "layout-2",
+                    "label": "Layout 2"
+                    }
+                ],
+                "default": "layout-1"
+            },
+            {
+                "type": "header",
+                "content": "Desktop Spacing"
+            },
+            {
+                "type": "range",
+                "id": "desktop_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "desktop_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 100
+            },
+            {
+                "type": "header",
+                "content": "Mobile Spacing"
+            },
+            {
+                "type": "range",
+                "id": "mobile_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 100
+            },
+            {
+                "type": "range",
+                "id": "mobile_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 100
+            }
+        ],
+        "blocks": [
+            {
+                "type": "carousel_item",
+                "name": "Carousel Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "text",
+                        "id": "tab",
+                        "label": "Tab Name"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title"
+                    },
+                    {
+                        "type": "richtext",
+                        "id": "description",
+                        "label": "Description"
+                    },
+                    {
+                        "type": "select",
+                        "id": "text_width",
+                        "label": "Text Width",
+                        "options": [
+                            {
+                            "value": "contained",
+                            "label": "Contained"
+                            },
+                            {
+                            "value": "full",
+                            "label": "Full"
+                            }
+                        ],
+                        "default": "contained"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Featured Carousel",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

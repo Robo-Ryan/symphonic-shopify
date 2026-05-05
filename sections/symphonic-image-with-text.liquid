@@ -1,0 +1,297 @@
+<style type="text/css">
+.img-text {
+    width: 100%;
+}
+#shopify-section-{{ section.id }} .img-text {
+    padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+}
+.img-text--arrow {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.img-text--focused .img-text__styled-text {
+    text-transform: none;
+}
+.img-text__text {
+    width: 100%;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img-text--arrow .img-text__text {
+    justify-content: center;
+}
+.img-text--circle .img-text__text .img-text__text-container {
+    padding: 0 0 100%;
+    position: relative;
+    width: 100%;
+    margin-bottom: -15%;
+}
+.img-text--arrow .img-text__text .img-text__text-container {
+    margin-top: 3rem;
+    padding: 0 35px 0 0;
+    position: relative;
+}
+.img-text--arrow .img-text__text .img-text__text-container svg {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    width: 28px;
+    height: auto;
+}
+.img-text--circle .img-text__styled-text {
+    text-align: center;
+    position: absolute;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    border-radius: 50%;
+    padding: 25%;
+    border: 1px solid #000;
+}
+.img-text--arrow .img-text__styled-text {
+    display: flex;
+    height: 100%;
+}
+.img-text--arrow .img-text__styled-text span {
+    line-height: 1.43;
+}
+
+.img-text__cta {
+    text-align: center;
+    padding-top: 27px
+}
+.img-text--arrow .img-text__cta {
+    text-align: left;
+    width: 100%;
+}
+.img-text__text .img-text__cta {
+    display: none;
+}
+.img-text__image {
+    height: 127vw;
+    position: relative;
+}
+.img-text--focused .img-text__image {
+    height: 90vw;
+}
+.img-text__image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.img-text--focused .img-text__text { 
+    padding-bottom: 64px;
+}
+.img-text--arrow .img-text__image {
+    margin: 0 calc(-1 * var(--container-gutter));
+}
+@media (min-width: 741px) {
+    .img-text {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    #shopify-section-{{ section.id }} .img-text {
+        padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+    }
+    .img-text.img-text--focused {
+        flex-direction: row;
+    }
+    .img-text__image {
+        width: 57%;
+        height: auto;
+    }
+    .img-text--arrow .img-text__image {
+        width: 50%;
+        margin: 0;
+    }
+    .img-text--focused .img-text__image {
+        width: 30%;
+        height: auto;
+        margin: 0 0 0 auto;
+    }
+    .img-text__image img {
+        height: auto;
+    }
+    .img-text__text {
+        width: 34%;
+    }
+    .img-text--arrow .img-text__text {
+        width: 40%;
+    }
+    .img-text--focused .img-text__text {
+        width: 66%;
+    }
+    .img-text--circle .img-text__text .img-text__text-container {
+        margin-bottom: auto;
+    }
+    .img-text--arrow .img-text__text .img-text__text-container {
+        margin-bottom: 0;
+    }
+
+    .img-text .img-text__cta {
+        display: none;
+    }
+    .img-text__text .img-text__cta {
+        margin-top: auto;
+        display: block;
+    }
+    .img-text--arrow .img-text__text .img-text__cta {
+        margin-top: 1rem;
+    }
+    .img-text--circle .img-text__styled-text {
+        padding: 15%;
+    }
+    .img-text--focused .img-text__styled-text {
+        padding: 0;
+    }
+    .img-text--arrow .img-text__styled-text {
+        padding: 0;
+    }
+    .img-text--arrow .img-text__text .img-text__text-container {
+        padding: 0 80px 0 0;
+    }
+    .img-text--arrow .img-text__text .img-text__text-container svg {
+        right: 0;
+    }
+}
+</style>
+
+<div class="container">
+
+    <div class="img-text img-text--{{ section.settings.layout }}">
+        <div class="img-text__text">
+            <div class="img-text__text-container">
+                <div class="img-text__styled-text{% if section.settings.layout == "focused" %} h4 m-b1-lg{% else %} s2 m-s3{% endif %}">
+                    <span>{{ section.settings.text | newline_to_br }}</span>               
+                </div>
+                {%- if section.settings.layout == "arrow" -%}{% render 'symphonic-icon' with 'arrow-left' %}{%- endif -%}
+            </div>
+            {%- if section.settings.cta_text != blank and section.settings.cta_url != blank -%}
+            <div class="img-text__cta">
+                <a href="{{ section.settings.cta_url }}" class="button button--primary">{{ section.settings.cta_text }}</a>
+            </div>
+            {%- endif -%}
+        </div>
+        <div class="img-text__image">
+            {%- if section.settings.image != blank -%}
+                {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+        </div>
+        {%- if section.settings.cta_text != blank and section.settings.cta_url != blank -%}
+        <div class="img-text__cta">
+            <a href="{{ section.settings.cta_url }}" class="button button--primary">{{ section.settings.cta_text }}</a>
+        </div>
+        {%- endif -%}
+    </div>
+
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Image with Text",
+        "class": "smd-image-with-text",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "textarea",
+                "id": "text",
+                "label": "Text",
+                "default": "Your copy here!"
+            },
+            {
+                "type": "select",
+                "id": "layout",
+                "label": "Layout",
+                "options": [
+                    {
+                    "value": "circle",
+                    "label": "Circled content"
+                    },
+                    {
+                    "value": "arrow",
+                    "label": "Arrowed content"
+                    },
+                    {
+                    "value": "focused",
+                    "label": "Text focused"
+                    }
+                ],
+                "default": "circle"
+            },
+            {
+                "type": "header",
+                "content": "Desktop Spacing"
+            },
+            {
+                "type": "range",
+                "id": "desktop_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 60
+            },
+            {
+                "type": "range",
+                "id": "desktop_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 60
+            },
+            {
+                "type": "header",
+                "content": "Mobile Spacing"
+            },
+            {
+                "type": "range",
+                "id": "mobile_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 60
+            },
+            {
+                "type": "range",
+                "id": "mobile_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 60
+            },
+            {
+                "type": "text",
+                "id": "cta_text",
+                "label": "CTA Text"
+            },
+            {
+                "type": "url",
+                "id": "cta_url",
+                "label": "CTA Link"
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Image with Text",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

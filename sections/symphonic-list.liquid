@@ -1,0 +1,184 @@
+<style type="text/css">
+
+    #shopify-section-{{ section.id }}.smd-info-list {
+        padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+    }
+    .info-list__item{
+        padding-bottom: 1em;
+    }
+    .info-list__heading {
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+    }
+    .info-list__img img {
+        width: 100%;
+    }
+    @media (min-width: 741px) {
+        #shopify-section-{{ section.id }}.smd-info-list {
+            padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+        }
+        .info-list {
+            display: flex;
+        }
+        .info-list__img {
+            width: 32%;
+        }
+        .info-list__heading {
+            margin-top: .5em;
+        }
+        .info-list__content {
+            display: flex;
+            width: 66%;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        .info-list__indicator {
+            width: 43%;
+            height: 1px;
+            background: rgb(var(--brand-color-black));
+            position: relative;
+            margin: 7px 0 20px;
+        }
+        .info-list__indicator:before, .info-list__indicator:after {
+            display: block;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            background: rgb(var(--brand-color-black));
+            content: "";
+            position: absolute;
+            top: -7px;
+        }
+        .info-list__indicator:after {
+            right: 0;
+        }
+    }
+    @media (min-width: 1200px) {
+
+        .info-list__heading {
+            margin-top: 0;
+            width: 40%;
+        }
+        .info-list__items {
+            width: 60%;
+        }
+
+
+    }
+    </style>
+    <div class="container">
+        
+        <div class="info-list">
+            <div class="info-list__img">
+                {%- if section.settings.image != blank -%}
+                    {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                {%- else -%}
+                    {{- 'image' | placeholder_svg_tag: "bordered" -}}
+                {%- endif -%}
+            </div>
+            <div class="info-list__content">
+                <div style="width: 100%;">
+                <div class="info-list__indicator"></div>
+                </div>
+                <div class="info-list__heading">
+                    <h2 class="h3">{{ section.settings.heading }}</h2>
+                </div>
+                <div class="info-list__items">
+                    <ol class="s3">
+                    {%- for block in section.blocks -%}
+                        <li class="info-list__item">
+                            {{ block.settings.title }}
+                        </li>
+                    {%- endfor -%}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% schema %}
+        {
+            "name": "SMD - List",
+            "class": "smd-info-list",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading",
+                    "default": "OUR CLINICAL TESTING STANDARDS"
+                },
+                {
+                    "type": "header",
+                    "content": "Desktop Spacing"
+                },
+                {
+                    "type": "range",
+                    "id": "desktop_top_spacing",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Top",
+                    "default": 60
+                },
+                {
+                    "type": "range",
+                    "id": "desktop_bottom_spacing",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Bottom",
+                    "default": 60
+                },
+                {
+                    "type": "header",
+                    "content": "Mobile Spacing"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile_top_spacing",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Top",
+                    "default": 60
+                },
+                {
+                    "type": "range",
+                    "id": "mobile_bottom_spacing",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "label": "Bottom",
+                    "default": 60
+                }
+            ],
+            "blocks": [
+                {
+                    "type": "list-item",
+                    "name": "List Item",
+                    "settings": [
+                        {
+                            "type": "textarea",
+                            "id": "title",
+                            "label": "List Item"
+                        }
+                    ]
+                }
+            ],
+            "presets": [
+                {
+                  "name": "SMD - List",
+                  "settings": {}
+                }
+            ]
+        }
+    {% endschema %}

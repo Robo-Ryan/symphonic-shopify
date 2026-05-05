@@ -1,0 +1,192 @@
+<style type="text/css">
+.smd-multi-image-hero {
+    padding: 60px 0 0;
+    overflow: hidden;
+}
+.multi-image-hero {
+    position: relative;
+}
+.multi-image-hero__header {
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 3;
+}
+.multi-image-hero__header .h1 {
+    padding-bottom: 2rem;
+    margin-right: -100%;
+}
+.multi-image-hero__img {
+    position: relative;
+    z-index: 2;
+    margin-left: calc(-1 * var(--container-gutter));
+    margin-right: calc(-1 * var(--container-gutter));
+}
+.multi-image-hero svg {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    left: 0%;
+    top: 44%;
+}
+.multi-image-hero svg path {
+    stroke: rgb(var(--brand-color-green));
+    stroke-width: .25px;
+}
+.multi-image-hero__footer {
+    padding: 25px 0 25px 50px;
+    max-width: 342px;
+    margin: 0 auto;
+}
+.multi-image-hero__footer > div {
+    position: relative;
+}
+.multi-image-hero__footer svg {
+    position: absolute;
+    left: -46px;
+    top: 0;
+}
+.multi-image-hero__footer p {
+    line-height: 1.43;
+}
+@media (min-width: 400px) {
+    .multi-image-hero__footer {
+        padding: 25px 10px 25px 62px;
+    }
+}
+@media (min-width: 741px) {
+
+    .multi-image-hero svg {
+        width: auto;
+        height: 101%;
+        top: -5px;
+        margin: auto;
+        left: 57%;
+    }
+    .multi-image-hero {
+        display: flex;
+    }
+    .multi-image-hero__header {
+        width: 32%;
+        margin-right: auto;
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .multi-image-hero__header .h1 {
+        padding-bottom: 0;
+    }
+    .multi-image-hero__header img {
+        margin-top: auto;
+    }
+    .multi-image-hero__img {
+        width: 48%;
+        margin-right: 0;
+        margin-left: auto;
+    }
+    .multi-image-hero__footer {
+        padding: 40px 0 20px 60%;
+        max-width: 100%;
+        margin: 0;
+    }
+    .multi-image-hero__footer svg {
+        left: -49px;
+    }
+}
+</style>
+<div class="container">
+    <div class="multi-image-hero">
+
+        <div class="multi-image-hero__header">
+            <{{ section.settings.heading_tag }} class="h1 m-h3 text_to_animate">{{ section.settings.title | newline_to_br }}</{{ section.settings.heading_tag }}>
+            {%- if section.settings.image_1 != blank -%}
+                {{- section.settings.image_1 | image_url: width: section.settings.image_1.width | image_tag: fetchpriority: 'high', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+        </div>
+
+        <div class="multi-image-hero__img">
+            {%- if section.settings.image_2 != blank -%}
+                {{- section.settings.image_2 | image_url: width: section.settings.image_2.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+        </div>
+
+        {%- render 'symphonic-icon' with 'brand-icon-1', class: 'icon--multi-image-hero' -%}
+    </div>
+    <div class="multi-image-hero__footer">
+        <div class="s2 m-s3">
+            {%- render 'symphonic-icon' with 'arrow-right' -%}
+            {{ section.settings.description }}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Multi-image hero",
+        "class": "smd-multi-image-hero",
+        "settings": [
+            {
+                "type": "textarea",
+                "id": "title",
+                "label": "Heading"
+            },
+            {
+                "type": "select",
+                "id": "heading_tag",
+                "label": "Heading Tag",
+                "options": [
+                    {
+                    "value": "h1",
+                    "label": "H1"
+                    },
+                    {
+                    "value": "h2",
+                    "label": "H2"
+                    },
+                    {
+                    "value": "h3",
+                    "label": "H3"
+                    },
+                    {
+                    "value": "h4",
+                    "label": "H4"
+                    },
+                    {
+                    "value": "h5",
+                    "label": "H5"
+                    },
+                    {
+                    "value": "p",
+                    "label": "P"
+                    }
+                ],
+                "default": "h1"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_1",
+                "label": "Image 1"
+            },
+            {
+                "type": "image_picker",
+                "id": "image_2",
+                "label": "Image 2"
+            },
+            {
+                "type": "richtext",
+                "id": "description",
+                "label": "Description"
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Multi-image hero",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

@@ -1,0 +1,174 @@
+<style type="text/css">
+.smd-reviews {
+    padding: 5rem 0;
+}
+
+
+.smd-reviews__reviews-headline {
+    margin: 0;
+}
+.smd-reviews__reviews-header .rating {
+    margin: 0 0 0 auto;
+    color: rgb(var(--brand-color-green));
+}
+
+
+h2.jdgm-rev-widg__title {
+    text-transform: uppercase;
+}
+
+a.jdgm-write-rev-link, .jdgm-btn {
+    text-transform: uppercase;
+    padding: 18px 35px !important;
+    border-width: 1px !important;
+}
+
+.jdgm-form__title {
+    text-transform: uppercase;
+}
+
+.jdgm-form .jdgm-form__fieldset>label {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.jdgm-form input[type="text"], .jdgm-form input[type="email"], .jdgm-form input[type="url"], .jdgm-form textarea {
+    border: 1px solid #000 !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #000 !important;
+}
+.jdgm-picture-fieldset__box-wrapper {
+    border-color: #000;
+}
+
+a.jdgm-write-rev-link {
+    border: 1px solid #000;
+    background: #fff !important;
+    color: #000 !important;
+    transition: all .3s;
+}
+a.jdgm-write-rev-link:hover {
+    background: #000 !important;
+    color: #fff !important;
+}
+.jdgm-notification__title {
+    text-transform: uppercase;
+}
+.jdgm-rev-widg.jdgm-rev-widg {
+    display: flex !important;
+    flex-direction: column-reverse;
+}
+.jdgm-rev-widg__header {
+    text-align: left !important;
+}
+.jdgm-review-widget--medium .jdgm-write-rev-link, .jdgm-review-widget--medium .jdgm-ask-question-btn {
+    margin-left: 0 !important;
+    text-align: center;
+}
+.jdgm-rev-widg__header .jdgm-rev-widg__title, .jdgm-row-actions, .jdgm-rev-widg__summary, .jdgm-histogram.jdgm-temp-hidden, .jdgm-rev-widg__summary-stars {
+    display: none !important;
+}
+.jdgm-rev-widg[data-number-of-reviews="0"] .jdgm-rev-widg__header .jdgm-rev-widg__title, .jdgm-rev-widg[data-number-of-reviews="0"] .jdgm-rev-widg__summary {
+    display: block !important;
+}
+
+.jdgm-form {
+    max-width: 100% !important;
+    padding: 0 !important;
+}
+
+.jdgm-row-media, .jdgm-row-search, .jdgm-subtab, .jdgm-row-actions, .jdgm-quest, .jdgm-rev, .jdgm-paginate {
+    border: none !important;
+}
+b.jdgm-rev__title {
+    text-transform: uppercase;
+}
+span.jdgm-rev__timestamp {
+    color: #000;
+    font-weight: 700;
+}
+
+@media (min-width: 741px) {
+    .smd-reviews {
+        padding: 150px 0 100px;
+    }
+    .smd-reviews__container {
+        display: flex;
+    }
+    .smd-reviews__img {
+        width: 48%;
+    }
+    .smd-reviews__reviews {
+        width: 48%;
+        margin-left: auto;
+    }
+    .smd-reviews__reviews-header {
+        display: flex;
+    }
+
+    .jdgm-rev-widg__body {
+        max-height: 539px;
+        overflow: auto;
+    }
+}
+@media (max-width: 740px) {
+.jdgm-review-widget--medium .jdgm-write-rev-link, .jdgm-review-widget--medium .jdgm-ask-question-btn {
+    max-width: 100% !important;
+    text-align: center !important;
+}
+.jdgm-form__fieldset.jdgm-form__fieldset-actions, a.jdgm-write-rev-link.close-form-btn {
+    text-align: center;
+  }
+}
+</style>
+<div id="reviews" class="container">
+    <div class="smd-reviews__container">
+        <div class="smd-reviews__reviews-header hidden-tablet-and-up">
+            <h3 class="smd-reviews__reviews-headline h3 m-h5">{{ section.settings.title }}</h3>
+            {%- render 'product-rating', product: product -%}
+        </div>
+        {%- if section.settings.image != blank -%}
+        <div class="smd-reviews__img">
+            {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+        </div>
+        {%- endif -%}
+        <div class="smd-reviews__reviews">
+            <div class="smd-reviews__reviews-header hidden-phone">
+                <div class="smd-reviews__reviews-headline h3 m-h5">{{ section.settings.title }}</div>
+                {%- render 'product-rating', product: product -%}
+            </div>
+            <div class="smd-reviews__reviews-list">
+                <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-id='{{ product.id }}'>
+                    {{ product.metafields.judgeme.widget }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Reviews",
+        "class": "smd-reviews",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Reviews"
+            },
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "image"
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Reviews",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

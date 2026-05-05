@@ -1,0 +1,103 @@
+{%- capture featured_products -%}
+{%- for prod in section.settings.featured_collection.products -%}
+    <div class="featured-products__slide">
+        {%- render 'symphonic-product-card', product: prod -%}
+    </div>
+{%- endfor -%}
+{%- endcapture -%}
+<div class="featured-products__container">
+    <div class="featured-products__intro">
+        <div class="featured-products__copy">
+            <{{ section.settings.heading_tag }} class="h3 m-h5">{{ section.settings.title }}</{{ section.settings.heading_tag }}>
+            {%- if section.settings.description != blank -%}
+                {{ section.settings.description | replace: 'BioA3', 'BioA3<sup>3</sup>' }}
+            {%- endif -%}
+            <div class="featured-products__pagination">
+                <button class="featured-products__pagination-btn featured-products__pagination-btn--prev" aria-label="Previous">{% render 'symphonic-icon' with 'circle-arrow-left' %}</button>
+                <button class="featured-products__pagination-btn featured-products__pagination-btn--next" aria-label="Next">{% render 'symphonic-icon' with 'circle-arrow-right' %}</button>
+            </div>
+        </div>
+    </div>
+    <div class="featured-products__products">
+        <div class="featured-products__slider">
+            {{ featured_products }}
+            {{ featured_products }}
+            {{ featured_products }}
+        </div>
+    </div>
+    <div class="featured-products__pagination featured-products__pagination--mobile">
+        <button class="featured-products__pagination-btn featured-products__pagination-btn--prev" aria-label="Previous">{% render 'symphonic-icon' with 'circle-arrow-left' %}</button>
+        <button class="featured-products__pagination-btn featured-products__pagination-btn--next" aria-label="Next">{% render 'symphonic-icon' with 'circle-arrow-right' %}</button>
+    </div>
+</div>
+
+<script>
+
+</script>
+{% schema %}
+    {
+        "name": "SMD - Featured Products",
+        "class": "featured-products",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Heading",
+                "default": "MULTI-TARGETED FORMULAS"
+            },
+            {
+                "type": "select",
+                "id": "heading_tag",
+                "label": "Heading Tag",
+                "options": [
+                    {
+                    "value": "h1",
+                    "label": "H1"
+                    },
+                    {
+                    "value": "h2",
+                    "label": "H2"
+                    },
+                    {
+                    "value": "h3",
+                    "label": "H3"
+                    },
+                    {
+                    "value": "h4",
+                    "label": "H4"
+                    },
+                    {
+                    "value": "h5",
+                    "label": "H5"
+                    },
+                    {
+                    "value": "p",
+                    "label": "P"
+                    },
+                    {
+                    "value": "div",
+                    "label": "DIV"
+                    }
+                ],
+                "default": "h2"
+            },
+            {
+                "type": "richtext",
+                "id": "description",
+                "label": "Description",
+                "default": "<p>We zero in on multiple highly specific concerns, safely solving more skincare problems within a single product.</p>"
+            },
+            {
+                "type": "collection",
+                "id": "featured_collection",
+                "label": "Collection"
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Featured Products",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

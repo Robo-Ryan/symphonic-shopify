@@ -1,0 +1,143 @@
+<style type="text/css">
+.social-gallery {
+    padding-bottom: 7rem;
+}
+.social-gallery__feed {
+    display: flex;
+    margin: 0 -.5rem;
+    flex-wrap: wrap;
+}
+.social-gallery__item {
+    width: 100%;
+    padding: .5rem;
+    position: relative;
+}
+.social-gallery__item img {
+    width: 100%;
+}
+
+.social-gallery__item--header div {
+    padding-bottom: 100%;
+    position: relative;
+}
+
+h3.social-gallery__item span, h3.social-gallery__item a {
+    border: 1px solid #000;
+    border-radius: 1000px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    flex-direction: column;
+}
+.social-gallery__item:nth-child(3), .social-gallery__item:last-child {
+    width: 50%;
+}
+h3.social-gallery__item svg {
+    margin-top: 1rem;
+}
+
+@media (min-width: 740px) {
+    .social-gallery__feed {
+        margin: 0 -1rem;
+    }
+    .social-gallery__item {
+        width: 25%;
+        padding: 1rem;
+    }
+    .social-gallery__item:nth-child(3), .social-gallery__item:last-child {
+        width: 25%;
+    }
+    .social-gallery__item:first-child {
+        order: 2;
+    }
+    .social-gallery__item:nth-child(2) {
+        order: 1;
+    }
+    .social-gallery__item:nth-child(3) {
+        order: 3;
+    }
+    .social-gallery__item:last-child {
+        order: 4;
+    }
+}
+</style>
+<div class="container">
+    <div class="social-gallery__feed">
+        <h3 class="social-gallery__item social-gallery__item--header s2 m-s3">
+            <div>
+                {%- if section.settings.link != blank -%}
+            <a href="{{ section.settings.link }}">
+                {%- else -%}
+            <span>
+                {%- endif -%}
+                {{ section.settings.title }}
+                {% render 'symphonic-icon' with 'circle-plus', direction_aware: true %}
+            {%- if section.settings.link != blank -%}
+                </a>
+            {%- else -%}
+                </span>
+            {%- endif -%}
+            </div>
+        </h3>
+        {%- for block in section.blocks -%}
+        <div class="social-gallery__item">
+            {%- if block.settings.image != blank -%}
+                {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+        </div>
+        {%- endfor -%}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Social Gallery",
+        "class": "social-gallery",
+        "settings": [
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Follow Us"
+            },
+            {
+                "type": "url",
+                "id": "link",
+                "label": "Link"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "gallery_item",
+                "name": "Gallery Item",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    },
+                    {
+                        "type": "url",
+                        "id": "link",
+                        "label": "Link"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Social Gallery",
+              "settings": {}
+            }
+        ]
+        
+    }
+{% endschema %}

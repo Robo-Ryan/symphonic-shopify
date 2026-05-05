@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="accordion__container">
+        <div class="accordion__img">
+            {%- if section.settings.image != blank -%}
+                {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+            </div>
+        <div class="accordion__items">
+            {%- for block in section.blocks -%}
+            <div class="accordion__item">
+              <button is="toggle-button" class="collapsible-toggle text--strong h3 m-h5" aria-controls="block-{{ section.id }}-{{ forloop.index }}" aria-expanded="false" itemprop="name">
+                {{ block.settings.title }}
+                <span class="animated-plus"></span>
+              </button>
+      
+              <collapsible-content id="block-{{ section.id }}-{{ forloop.index }}" class="collapsible anchor" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" {{ block.shopify_attributes }}>
+                <div class="collapsible__content text-container" itemprop="text">
+                  <p>{{ block.settings.description }}</p>
+                </div>
+                </collapsible-content>
+            </div>
+            <!--<div class="accordion__item">
+                <div class="accordion__title">
+                    <button class="h3 m-h5">{{ block.settings.title }}</button>
+                </div>
+                <div class="accordion__content">
+                    {{ block.settings.description }}
+                </div>
+            </div>-->
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "SMD - Accordion",
+        "class": "smd-accordion",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "panel",
+                "name": "Panel",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title",
+                        "default": "Title"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "description",
+                        "label": "Description"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Accordion",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

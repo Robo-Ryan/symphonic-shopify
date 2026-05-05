@@ -1,0 +1,61 @@
+<div class="container" style="max-width: 760px;">
+    <div class="branded-headline">
+        <div class="branded-headline__heading">
+        <{{ section.settings.tag }} class="h1 m-h3">{{ section.settings.title }}</{{ section.settings.tag }}>
+        </div>
+        {% render 'symphonic-icon' with 'brand-icon-1' %}
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Branded headline",
+        "class": "smd-branded-headline",
+        "settings": [
+            {
+                "type": "textarea",
+                "id": "title",
+                "label": "Headline",
+                "default": "Headline"
+            },
+            {
+                "type": "select",
+                "id": "tag",
+                "label": "Headline Tag",
+                "options": [
+                    {
+                    "value": "h1",
+                    "label": "H1"
+                    },
+                    {
+                    "value": "h2",
+                    "label": "H2"
+                    },
+                    {
+                    "value": "h3",
+                    "label": "H3"
+                    },
+                    {
+                    "value": "h4",
+                    "label": "H4"
+                    },
+                    {
+                    "value": "h5",
+                    "label": "H5"
+                    },
+                    {
+                    "value": "p",
+                    "label": "P"
+                    }
+                ],
+                "default": "h2"
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Branded headline",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

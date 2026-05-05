@@ -1,0 +1,147 @@
+<style type="text/css">
+    .related-articles {
+        padding: 2rem 0;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+    }
+    .article-list--related {
+        margin: 0;
+    }
+    .related-articles__cta {
+        padding: 3rem 0 2rem;
+        text-align: center;
+    }
+    .related-articles__slider-nav {
+        text-align: right;
+        padding-top: 1rem;
+    }
+    .related-articles__slider-nav svg {
+        width: 39px;
+        height: auto;
+    }
+    .related-articles__pagination-btn {
+        margin: 0 20px;
+    }
+    .related-articles__pagination-btn--next {
+        margin-right: 0;
+    }
+    @media (max-width: 740px) {
+        .article-list--related:after {
+            display: none;
+            content: 'flickity';
+        }
+    }
+    @media (min-width: 741px) {
+        .article-list--related {
+            display: flex;
+            margin: 0 -16px;
+        }
+        .article-list--related .article-item {
+            width: 33.3%;
+            padding: 0 16px;
+        }
+        .related-articles__cta {
+            padding-top: 4rem;
+        }
+        .related-articles__slider-nav {
+            display: none;
+        }
+    }
+    {%- if product != blank -%}
+        .related-articles {
+            margin-bottom: 5rem;
+        }
+    {%- endif -%}
+</style>
+
+
+<div class="container">
+    <div class="related-articles">
+        <h3 class="h3">{{ section.settings.title }}</h3>
+        <div class="article-list--related">
+        {%- assign article_count = 0 -%}
+        {%- if product != blank -%}
+            {% for artcle in section.settings.blog.articles %}
+                {%- assign features_product = false -%}
+                {%- for prod in artcle.metafields.custom.featured_products.value -%}
+                    {%- if prod.id == product.id -%}
+                        {%- assign features_product = true -%}
+                    {%- endif -%}
+                {%- endfor -%}
+                {%- if features_product -%}
+                    {%- assign article_count = article_count | plus: 1 -%}
+                    {%- if article_count <= 3 -%}
+                        {%- render 'article-item', article: artcle, heading_size: 's4', hide_arrows: true, no_reveal: true, show_author: section.settings.show_authors, show_date: section.settings.show_dates -%}
+                    {%- endif -%}
+                {%- endif -%}  
+            {% endfor %}
+        {%- else -%}
+            {% for artcle in section.settings.blog.articles limit: 4 %}
+                {%- if artcle.handle != article.handle -%}
+                    {%- assign article_count = article_count | plus: 1 -%}
+                    {%- if article_count <= 3 -%}
+                        {%- render 'article-item', article: artcle, heading_size: 's4', hide_arrows: true, no_reveal: true, show_author: section.settings.show_authors, show_date: section.settings.show_dates -%}
+                    {%- endif -%}
+                {%- endif -%}
+            {% endfor %}
+        {%- endif -%}
+        </div>
+        <div class="related-articles__slider-nav">
+            <button class="related-articles__pagination-btn related-articles__pagination-btn--prev" aria-label="Previous">{%- render 'symphonic-icon' with 'circle-arrow-left', width: 21, height: 22 -%}</button>
+            <button class="related-articles__pagination-btn related-articles__pagination-btn--next" aria-label="Next">{%- render 'symphonic-icon' with 'circle-arrow-right', width: 21, height: 22 -%}</button>
+        </div>
+        <div class="related-articles__cta">
+            {%- if section.settings.cta_link != blank and section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="button button--secondary">{{ section.settings.cta_text }}</a>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD Related Articles",
+        "class": "smd-related-articles",
+        "settings": [
+            {
+                "type": "blog",
+                "id": "blog",
+                "label": "Blog"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Related Articles"
+            },
+            {
+                "type": "text",
+                "id": "cta_text",
+                "label": "CTA Text",
+                "default": "See all articles"
+            },
+            {
+                "type": "url",
+                "id": "cta_link",
+                "label": "CTA Link"
+            },
+            {
+              "type": "checkbox",
+              "id": "show_authors",
+              "label": "Show authors",
+              "default": false
+            },
+            {
+              "type": "checkbox",
+              "id": "show_dates",
+              "label": "Show dates",
+              "default": false
+            }
+        ],
+        "presets": [
+          {
+            "name": "SMD Related Articles"
+          }
+        ]
+    }
+{% endschema %}

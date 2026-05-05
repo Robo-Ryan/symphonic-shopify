@@ -1,0 +1,144 @@
+<style type="text/css">
+
+#shopify-section-{{ section.id }} {
+    padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+  }
+  @media (min-width: 741px) {
+    #shopify-section-{{ section.id }} {
+      padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+    }
+  }
+</style>
+<div class="container">
+    <div class="featured-content__container">
+        <div class="featured-content__img">
+            {%- if section.settings.image != blank -%}
+                {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000', class: 'gsap-banner-scale' -}}
+            {%- else -%}
+                {{- 'image' | placeholder_svg_tag: "bordered" -}}
+            {%- endif -%}
+        </div>
+        <div class="featured-content__content">
+            <div class="featured-content__header">
+                {%- if section.settings.sub_title != blank -%}
+                <div class="featured-content__sub-title s4">
+                    {{ section.settings.sub_title }}
+                </div>
+                {%- endif -%}
+                {%- if section.settings.title != blank -%}
+                <h2 class="featured-content__title h1 m-h5">
+                    {{ section.settings.title }}
+                </h2>
+                {%- endif -%}
+            </div>
+            <div class="featured-content__description">
+                {{ section.settings.description }}
+                {%- if section.settings.cta_text != blank and  section.settings.cta_url != blank -%}
+                <div class="featured-content__cta">
+                    <a href="{{ section.settings.cta_url }}" class="button button--primary"{% if section.settings.cta_new_tab %} target="_blank"{% endif %}>{{ section.settings.cta_text }}</a>
+                </div>
+                {%- endif -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Featured content",
+        "class": "smd-featured-content",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+                "type": "textarea",
+                "id": "title",
+                "label": "Title"
+            },
+            {
+                "type": "textarea",
+                "id": "sub_title",
+                "label": "Sub-title"
+            },
+            {
+                "type": "richtext",
+                "id": "description",
+                "label": "Description",
+                "default": "<p></p>"
+            },
+            {
+                "type": "text",
+                "id": "cta_text",
+                "label": "CTA Text"
+            },
+            {
+                "type": "url",
+                "id": "cta_url",
+                "label": "CTA Link"
+            },
+            {
+                "type": "checkbox",
+                "id": "cta_new_tab",
+                "label": "Open CTA in new tab",
+                "default": false
+            },
+            {
+                "type": "header",
+                "content": "Desktop Spacing"
+            },
+            {
+                "type": "range",
+                "id": "desktop_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "desktop_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            },
+            {
+                "type": "header",
+                "content": "Mobile Spacing"
+            },
+            {
+                "type": "range",
+                "id": "mobile_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "mobile_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            }
+        ],
+        "presets": [
+            {
+              "name": "SMD - Featured content",
+              "settings": {}
+            }
+        ]
+    }
+{% endschema %}

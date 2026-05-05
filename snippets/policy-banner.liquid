@@ -1,0 +1,8 @@
+{% if request.path contains '/policies/' or request.path contains '/pages/accessibility' %}
+    {%- if settings.policy_banner != blank -%}
+<div class="policy-banner">
+    {{- settings.policy_banner_mobile | image_url: width: settings.policy_banner_mobile.width | image_tag: fetchpriority: 'high', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000', class: 'policy-banner__image policy-banner__image--mobile rellax' -}}  
+    {{- settings.policy_banner | image_url: width: settings.policies_banner.width | image_tag: fetchpriority: 'high', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000', class: 'policy-banner__image policy-banner__image--desktop rellax' -}}  
+</div>
+    {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,99 @@
+{%- assign product_title = product.title -%}
+{%- if product.metafields.custom.shortened_title != blank -%}
+  {%- assign product_title = product.metafields.custom.shortened_title.value -%}
+{%- endif -%}
+{%- assign product_tagline = product.type -%}
+{%- if product.metafields.custom.tagline != blank -%}
+  {%- assign product_tagline = product.metafields.custom.tagline.value -%}
+{%- endif -%}
+
+<div class="article-product-card">
+  <div class="article-product-card__image">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: product.featured_media.width | image_tag: loading: 'lazy', sizes: sizes_attribute, widths: '200,300,400,500,600,700,800,900,1000,1100,1200', class: 'product-item__primary-image', data-media-id: product.featured_media.id }}
+    {%- endif -%}
+  </div>
+
+  <div class="article-product-card__info">
+
+    <h3 class="article-product-card__title h3"><a href="{{ product.url }}">{{ product_title }}</a></h3>
+    
+    <div class="article-product-card__meta">
+
+
+      <div class="article-product-card__product-type s4">
+          {{ product_tagline }}
+      </div>
+  
+      <div class="article-product-card__price-list-container" role="region" aria-live="polite">
+        <div class="price-list" data-product-price-list>
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <span class="price price--highlight price--large">
+              <span class="visually-hidden">{{ 'product.general.sale_price' | t }}</span>
+  
+              {%- if settings.currency_code_enabled -%}
+                {{- product.selected_or_first_available_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- product.selected_or_first_available_variant.price | money -}}
+              {%- endif -%}
+            </span>
+  
+            <span class="price price--compare">
+              <span class="visually-hidden">{{ 'product.general.regular_price' | t }}</span>
+  
+              {%- if settings.currency_code_enabled -%}
+                {{- product.selected_or_first_available_variant.compare_at_price | money_with_currency -}}
+              {%- else -%}
+                {{- product.selected_or_first_available_variant.compare_at_price | money -}}
+              {%- endif -%}
+            </span>
+          {%- else -%}
+            <span class="price s4">
+              <span>Price: </span> 
+              {%- if settings.currency_code_enabled -%}
+                {{- product.selected_or_first_available_variant.price | money_with_currency -}}
+              {%- else -%}
+                {{- product.selected_or_first_available_variant.price | money_without_trailing_zeros -}}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+  
+          {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
+            <div class="price text--subdued">
+              <div class="unit-price-measurement">
+                <span class="unit-price-measurement__price">{{ product.selected_or_first_available_variant.unit_price | money }}</span>
+                <span class="unit-price-measurement__separator">/</span>
+  
+                {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+                  <span class="unit-price-measurement__reference-value">{{ product.selected_or_first_available_variant.unit_price_measurement.reference_value }}</span>
+                {%- endif -%}
+  
+                <span class="unit-price-measurement__reference-unit">{{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="article-product-card__description b1-lg rte">
+      <p>{{- product.description -}}</p>
+    </div>
+      
+      {%- if product.available and product.variants.size == 1 -%}
+        <div class="article-product-card__cta">
+          {%- capture form_id -%}product_form_{{ section.id }}_{{ block.id }}_{{ product.id }}_{% increment product_form_index %}{%- endcapture -%}
+          {%- form 'product', product, is: 'product-form', id: form_id, class: 'article-product-card__quick-form' -%}
+              <input type="hidden" name="quantity" value="1">
+              <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+              <button is="loader-button" type="submit" class="button button--secondary">Add to Cart</button>
+              <a href="{{ product.url }}" class="button button--outline">Learn More</a>
+            {%- endform -%}
+          </div>
+      {%- endif -%}
+    
+ 
+
+    
+  </div>
+</div>

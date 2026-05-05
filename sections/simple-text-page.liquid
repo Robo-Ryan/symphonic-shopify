@@ -1,0 +1,48 @@
+<section class="simple-text-page">
+    <div class="container">
+        <div class="logo">
+            <img class="tp-logo" src="//symphonic-md.myshopify.com/cdn/shop/files/symphonic-md-logo_380x.svg?v=1690388636" alt="Symphonic M.D." />
+        </div>
+        {%- if section.settings.show_title -%}
+            <h1 class="heading s4">{{ page.title }}</h1>
+        {%- endif -%}
+        <div class="page-content rte">
+            {{- page.content -}}
+        </div>
+    </div>
+</section>
+  
+  {% schema %}
+  {
+    "name": "Page",
+    "class": "shopify-section--main-page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_title",
+        "label": "Show page title",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "page_width",
+        "label": "Page width",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "medium"
+      }
+    ]
+  }
+  {% endschema %}

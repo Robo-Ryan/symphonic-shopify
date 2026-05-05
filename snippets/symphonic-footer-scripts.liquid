@@ -1,0 +1,20 @@
+{%- if request.path contains '/blogs/the-journal' -%}
+<script>
+    //console.log('start timer');
+    setTimeout(function() {
+        //console.log('end timer');
+        var popup_info = localStorage.getItem('klaviyoOnsite');
+        if ( popup_info ) {
+            var parsed_data = JSON.parse(popup_info);
+            if ( parsed_data.viewedForms.modal.disabledForms.Y2JAXc ) {
+                //console.log( "Disabled form info found, don't show popup" );
+            } else {
+                //console.log( "Disabled form not found, show popup" );
+                window._klOnsite = window._klOnsite || [];
+                window._klOnsite.push(['openForm', 'Y2JAXc']);
+            }
+        }
+
+    }, 20000);
+</script>
+{%- endif -%}

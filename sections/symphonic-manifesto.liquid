@@ -1,0 +1,178 @@
+<style>
+#main {
+    overflow:hidden;
+}
+</style>
+<div class="container">
+    {%- for block in section.blocks -%}
+        {%- if block.type == "headline" -%}
+            {%- if block.settings.title != blank -%}
+            <div class="manifesto__headline{% if block.settings.hide_from_view %} hidden{% endif %}">
+                <{{ block.settings.tag }} class="h1 m-h3{% if block.settings.animate_text %} text_to_animate--multi-line{% endif %}">{{ block.settings.title | newline_to_br }}</{{ block.settings.tag }}>
+            </div>
+            {%- endif -%}
+        {%- endif -%}
+        {%- if block.type == "copy" -%}
+            {%- if block.settings.copy != blank -%}
+            <div class="manifesto__copy rte h2 m-b1-lg">
+                {{ block.settings.copy | replace: "BioA3", "BioA<sup>3</sup>" }}
+            </div>
+            {%- endif -%}
+        {%- endif -%}
+        {%- if block.type == "badge" -%}
+            {%- if block.settings.badge != blank -%}
+            <div class="manifesto__badge s4">
+                {{ block.settings.badge }}
+            </div>
+            {%- endif -%}
+        {%- endif -%}
+        {%- if block.type == "image" -%}
+            {%- if block.settings.image != blank -%}
+            <div class="manifesto__image">
+                <div class="gsap-banner-scale">
+                {%- if block.settings.image != blank -%}
+                    {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                {%- else -%}
+                    {{- 'lifestyle-1' | placeholder_svg_tag: "bordered" -}}
+                {%- endif -%}
+                </div>
+            </div>
+            {%- endif -%}
+        {%- endif -%}
+        {%- if block.type == "brand_icon" -%}
+            {%- if block.settings.icon != blank -%}
+            <div class="manifesto__icon">
+                {% render 'symphonic-icon' with block.settings.icon, class: 'icon--animate-from-right' %}
+            </div>
+            {%- endif -%}
+        {%- endif -%}
+    {%- endfor -%}
+</div>
+
+{% schema %}
+    {
+        "name": "SMD - Manifesto",
+        "class": "smd-manifesto",
+        "settings": [
+        
+        ],
+        "blocks": [
+            {
+                "type": "headline",
+                "name": "Headline",
+                "settings": [
+                    {
+                        "type": "textarea",
+                        "id": "title",
+                        "label": "Headline"
+                    },
+                    {
+                        "type": "select",
+                        "id": "tag",
+                        "label": "Headline Tag",
+                        "options": [
+                            {
+                            "value": "h1",
+                            "label": "H1"
+                            },
+                            {
+                            "value": "h2",
+                            "label": "H2"
+                            },
+                            {
+                            "value": "h3",
+                            "label": "H3"
+                            },
+                            {
+                            "value": "h4",
+                            "label": "H4"
+                            },
+                            {
+                            "value": "h5",
+                            "label": "H5"
+                            },
+                            {
+                            "value": "p",
+                            "label": "P"
+                            }
+                        ],
+                        "default": "h1"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "hide_from_view",
+                        "label": "Hide from view",
+                        "default": false
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "animate_text",
+                        "label": "Animate Text",
+                        "default": false
+                    }
+                ]
+            },
+            {
+                "type": "copy",
+                "name": "Copy",
+                "settings": [
+                    {
+                        "type": "richtext",
+                        "id": "copy",
+                        "label": "Copy",
+                        "default": "<p></p>"
+                    }
+                ]
+            },
+            {
+                "type": "badge",
+                "name": "Badge",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "badge",
+                        "label": "Badge"
+                    }
+                ]
+            },
+            {
+                "type": "image",
+                "name": "Image",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "Image"
+                    }
+                ]
+            }, 
+            {
+                "type": "brand_icon",
+                "name": "Brand Icon",
+                "settings": [
+                    {
+                        "type": "select",
+                        "id": "icon",
+                        "label": "Icon",
+                        "options": [
+                            {
+                            "value": "brand-icon-1",
+                            "label": "Icon 1"
+                            },
+                            {
+                            "value": "brand-icon-2",
+                            "label": "Icon 2"
+                            },
+                            {
+                            "value": "brand-icon-3",
+                            "label": "Icon 3"
+                            }
+                        ],
+                        "default": "brand-icon-1"
+                    }
+                ]
+            }
+        ]
+        
+    }
+{% endschema %}

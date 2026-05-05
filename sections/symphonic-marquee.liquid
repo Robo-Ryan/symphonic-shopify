@@ -1,0 +1,111 @@
+<style type="text/css">
+.marquee__content {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: .6rem 0;
+    background: rgb(var(--brand-color-pale-green));
+    transition: all .3s;
+}
+.marquee__content:hover {
+    background: rgb(var(--brand-color-white));
+}
+.marquee__scroll {
+    width: 200%;
+    animation: marquee 7s linear infinite;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    font-size: 12px;
+}
+.marquee__scroll span {
+    display: inline-block;
+    margin: auto;
+    padding: 0 2rem;
+}
+.marquee__scroll span {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+.marquee__content svg {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    transform: translateX(50%);
+}
+@media (min-width: 741px) {
+    .marquee__scroll {
+        width: 200%;
+        animation: marquee 15s linear infinite;
+    }
+}
+@media (min-width: 1000px) {
+    .marquee__scroll {
+        width: 200%;
+        animation: marquee 20s linear infinite;
+    }
+}
+@keyframes marquee {
+    0% {
+        left: -100%;
+      }
+      100% {
+        left: 0%;
+      }
+  }
+  @media (max-width: 740px) {
+    .footer {
+        background-size: 50% auto;
+    }
+    .footer__aside {
+        padding-top: 120px;
+    }
+}
+@media screen and (min-width: 741px) {
+    .footer {
+        background-size: auto 65%;
+    }
+}
+</style>
+<div class="marquee">
+    <button class="marquee__content klaviyo_form_trigger">
+        <div class="marquee__scroll s3">
+            <span>{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %} </span>
+            <span>{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone hidden-tablet">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone hidden-tablet">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone hidden-tablet hidden-lap">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+            <span class="hidden-phone hidden-tablet hidden-lap">{{ section.settings.title }} {% render 'symphonic-icon' with 'arrow-right', width: 14, height: 14 %}</span>
+        </div>
+    </button>
+</div>
+
+<script type="text/javascript">
+    document.querySelector('.klaviyo_form_trigger').addEventListener('click', function (){
+        window._klOnsite = window._klOnsite || []; 
+        window._klOnsite.push(['openForm', 'QUv8zG']);
+    });
+</script>
+    
+    {% schema %}
+        {
+            "name": "SMD - Marquee",
+            "class": "smd-multi-image-hero",
+            "settings": [
+                {
+                    "type": "textarea",
+                    "id": "title",
+                    "label": "Text"
+                },
+                {
+                    "type": "url",
+                    "id": "link",
+                    "label": "Link"
+                }
+            ]
+        }
+    {% endschema %}
+    

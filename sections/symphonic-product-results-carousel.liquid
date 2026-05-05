@@ -1,0 +1,255 @@
+{%- assign current_product = product -%}
+{%- if current_product == blank and section.settings.product != blank -%}
+    {%- assign current_product = section.settings.product -%}
+{%- endif -%}
+{%- if current_product.metafields.custom.result_slides != blank -%}
+<style type="text/css">
+/*.product-results-carousel {
+    padding: 64px 0;
+}*/
+.product-results-carousel__slide {
+    width: 100%;
+}
+
+.product-results-carousel__result {
+    margin: auto 0;
+    padding: 0 0 10px;
+}
+.product-results-carousel__result:first-child {
+    margin: 0 0 auto;
+}
+.product-results-carousel__result:last-child {
+    margin: auto 0 0;
+    padding: 0;
+}
+.product-results-carousel__result .h1 {
+    margin: 1rem 0;
+}
+.product-results-carousel__result .s3 {
+    line-height: 1.43;
+}
+.product-results-carousel__slider .flickity-button {
+    top: 0;
+    right: 0;
+    transform: none;
+    border: 1px solid #000;
+}
+.product-results-carousel__slider .flickity-button.previous {
+    left: auto;
+    right: 84px;
+}
+.product-results-carousel__copy .product-results-carousel__title {
+    display: none;
+}
+.product-results-carousel__imgs {
+    height: 55vw;
+    display: flex;
+}
+.product-results-carousel__img {
+    width: 50%;
+}
+.product-results-carousel__img img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.product-results-carousel__img {
+    position: relative;
+}
+.product-results-carousel__img .badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.product-results-carousel__footnote {
+    padding: 10px 0;
+    font-size: 12px;
+}
+@media (min-width: 741px) { 
+    /*.product-results-carousel {
+        padding: 150px 0 100px;
+    }*/
+    .product-results-carousel__img {
+        height: auto;
+    }
+    .product-results-carousel__copy .product-results-carousel__title {
+        display: block;
+    }
+    .product-results-carousel__slide > .product-results-carousel__title {
+        display: none;
+    }
+    .product-results-carousel__slide {
+        display: flex;
+    }
+    .product-results-carousel__imgs {
+        width: 66%;
+        height: auto;
+        display: flex;
+    }
+    .product-results-carousel__img {
+        width: 50%;
+    }
+    .product-results-carousel__copy {
+        width: 34%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0 0 0 2.5%;
+    }
+    .product-results-carousel__footnote {
+        padding: 10px 0 0;
+        margin: auto 0 0;
+    }
+}
+@media (min-width: 1300px) {
+    .product-results-carousel__copy {
+        padding: 0 3% 0 2.5%;
+    }
+}
+.product-results-carousel__slider-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: 120px;
+}
+.product-results-carousel__slider-wrapper {
+    position: relative;
+}
+.product-results-carousel__pagination-btn--next {
+    margin-left: auto;
+}
+.product-results-carousel__results {
+    margin: auto 0;
+}
+</style>
+<style type="text/css">
+    #shopify-section-{{ section.id }} {
+        padding: {{ section.settings.mobile_top_spacing }}px 0 {{ section.settings.mobile_bottom_spacing }}px  ;
+      }
+      @media (min-width: 741px) {
+        #shopify-section-{{ section.id }} {
+          padding: {{ section.settings.desktop_top_spacing }}px 0 {{ section.settings.desktop_bottom_spacing }}px  ;
+        }
+      }
+</style>
+
+{%- assign slide_count = 0 -%}
+<div class="container">
+    <div class="product-results-carousel__slider-wrapper">
+        <div class="product-results-carousel__slider">
+            {%- for slide in product.metafields.custom.result_slides.value -%}
+                {%-  if slide_count == 0 -%}
+                <div class="product-results-carousel__slide">
+                    <h2 class="product-results-carousel__title h3">{{ slide.title }}</h2>
+                    <div class="product-results-carousel__imgs">
+                        <div class="product-results-carousel__img">
+                            {%- if slide.badge_text != blank -%}
+                            <div class="badge">{{ slide.badge_text }}</div>
+                            {%- endif -%}
+                            {{- slide.image | image_url: width: slide.image.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                        </div>
+                        <div class="product-results-carousel__img">
+                            {%- if slide.badge2_text != blank -%}
+                            <div class="badge">{{ slide.badge2_text }}</div>
+                            {%- endif -%}
+                            {{- slide.image2 | image_url: width: slide.image2.width | image_tag: loading: 'lazy', widths: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' -}}
+                        </div>
+                    </div>
+                    <div class="product-results-carousel__copy">
+                        <div class="product-results-carousel__title h3">{{ slide.title }}</div>
+                        <div class="product-results-carousel__results">
+                            {%- for result in slide.results.value -%}
+                            <div class="product-results-carousel__result">
+                                <h3 class="h1">{{ result.title }}</h3>
+                                <div class="s3 m-s3">{{ result.description }}</div>
+                            </div>
+                            {%- endfor -%}
+                        </div>
+                        {%- if slide.footnote != blank -%}
+                        <div class="product-results-carousel__footnote s4">{{ slide.footnote }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+                {%- assign slide_count = slide_count | plus: 1 -%}
+                {%-  endif -%}
+            {%- endfor -%}
+        </div>
+        {%- if slide_count > 1 -%}
+        <div class="product-results-carousel__slider-nav">
+            <button class="product-results-carousel__pagination-btn product-results-carousel__pagination-btn--prev" aria-label="Previous">{%- render 'symphonic-icon' with 'circle-arrow-left', width: 40, height: 40 -%}</button>
+            <button class="product-results-carousel__pagination-btn product-results-carousel__pagination-btn--next" aria-label="Next">{%- render 'symphonic-icon' with 'circle-arrow-right', width: 40, height: 40 -%}</button>
+        </div>
+        {%- endif -%}
+    </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+    {
+        "name": "SMD - Results Carousel",
+        "class": "product-results-carousel",
+        "settings": [
+            {
+                "type": "product",
+                "id": "product",
+                "label": "Product",
+                "info": "Choose product if loading from a non-product page"
+            },
+            {
+                "type": "header",
+                "content": "Desktop Spacing"
+            },
+            {
+                "type": "range",
+                "id": "desktop_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "desktop_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            },
+            {
+                "type": "header",
+                "content": "Mobile Spacing"
+            },
+            {
+                "type": "range",
+                "id": "mobile_top_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Top",
+                "default": 0
+            },
+            {
+                "type": "range",
+                "id": "mobile_bottom_spacing",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "px",
+                "label": "Bottom",
+                "default": 0
+            }
+        ],
+        "presets": [
+          {
+            "name": "SMD - Results Carousel",
+            "settings": {}
+          }
+        ]
+    }
+{% endschema %}

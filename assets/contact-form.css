@@ -1,0 +1,123 @@
+.contact__main{
+padding-inline: 0!important;
+margin-bottom: 5em;
+}
+
+.breadcrumb{
+    display: none;
+}
+
+/* Header Section */
+
+
+.contact__main-title{
+    text-align: left;
+    width: 100%;
+    line-height: 1em!important;
+}
+.contact__main h3{
+    text-align: left;
+    font-size: var(--heading-h3-font-size);
+    text-transform: uppercase;
+    line-height: 1em!important;
+    width: 85%;
+}
+.contact__main header{
+    width: 75%;
+    max-width: var(--container-max-width);
+}
+
+@media screen and (max-width: 769px) {
+   .contact__main header{
+        width: 100%;
+        
+    }
+    .contact__main-subheader::before{
+        height: 1em!important;
+    }
+    .contact__main   h1.contact__main-title.m-h3{
+        font-size: calc(var(--heading-h3-font-size) + .5em)!important;
+    }
+    .contact__main h3{
+        line-height: 1.2em!important;
+        font-size: calc(var(--heading-h3-font-size) - .2em) ;
+
+    }
+
+}
+
+/* Form Body */
+
+.contact__main-subheader{
+    text-transform: uppercase;
+    font-size: calc(var(--heading-h6-font-size) - .3em);
+    height: fit-content;
+    margin-block: 4em 2em;
+}
+
+.contact__main-subheader::before{
+    content: "";
+    display: inline-flex;
+    width: auto;
+    vertical-align: middle;
+    height: calc(var(--heading-h6-font-size) - .4em);
+    aspect-ratio: 1/1;
+    background: #000;
+    margin-right: .5rem;
+    border-radius: 50%;
+}
+.contact__main form {
+    width: clamp(700px, 60%, 1440px);
+    max-width: var(--container-max-width);
+    margin-inline: unset;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3em;
+}
+.contact__main form div.input label{
+    font-family: var(--text-font-family);
+    font-weight: var(--text-font-bold-weight);
+    text-transform: uppercase;
+    font-size: 1em;
+    color: #000;
+}
+.contact__main form div.input .input__field{
+    border: 1px solid #000;
+
+}
+.contact__main form div.input:not(:last-of-type){
+    min-width: 49%;
+    max-width: 49%;
+    display: inline-block;
+}
+.contact__main form div.input:last-of-type{
+    width: 100%;
+}
+
+.contact__main form div.input:nth-child(even){
+    margin-inline-start: 1em;
+}
+
+.contact__main .input__field--textarea{
+    height: 196px;
+}
+
+@media screen and (max-width: 769px) {
+    .contact__main form {
+        width: 100%;
+    }
+    h6.contact__main-subheader {
+        font-size: 1em;
+        margin-block: 4em 5em;
+    }
+    .contact__main form div.input:not(:last-of-type){
+        min-width: 100%;
+        max-width: 100%;
+        margin-inline: 0;
+    }
+    .contact__main .input__field--textarea{
+        height: 110px;
+    }
+}
