@@ -2036,6 +2036,23 @@ Sections
     margin-left: auto;
     margin-right: auto;
 }
+/* Variant picker: B2B / product page swatch states */
+.block-swatch__radio:checked + .block-swatch__item {
+  background: rgb(var(--primary-button-background));
+  color: rgb(var(--primary-button-text-color));
+  border-color: rgb(var(--primary-button-background));
+}
+.block-swatch__radio:checked + .block-swatch__item::after {
+  box-shadow: 0 0 0 1px rgb(var(--primary-button-background)) inset, 0 0 0 1px rgb(var(--primary-button-background));
+}
+.block-swatch.is-disabled .block-swatch__item {
+  background: rgb(var(--secondary-background));
+  color: rgba(var(--text-color), 0.35);
+  cursor: not-allowed;
+  opacity: 0.65;
+  background-image: none;
+}
+
 .shopify-section--logo-list > .section .container {
     border-top: 1px solid var(--section-border-top-color);
     border-bottom: 1px solid var(--section-border-bottom-color);

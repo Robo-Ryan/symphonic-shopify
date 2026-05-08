@@ -1,3 +1,10 @@
+{%- assign b2b_skip = false -%}
+{%- if customer.tags contains 'b2b' -%}
+  {%- if product.metafields.custom.wholesale != true -%}{%- assign b2b_skip = true -%}{%- endif -%}
+{%- else -%}
+  {%- if product.metafields.custom.wholesale == true -%}{%- assign b2b_skip = true -%}{%- endif -%}
+{%- endif -%}
+{%- unless b2b_skip -%}
 {%- assign color_label_list = 'general.label.color' | t | replace: ', ', ',' | downcase | split: ',' -%}
 {%- assign color_white_label = 'general.label.white' | t | downcase -%}
 {%- assign quick_buy_icon_name = 'quick-buy-' | append: settings.cart_icon | replace: '_', '-' -%}
@@ -289,3 +296,4 @@
     {%- endif -%}
   </div>
 </product-item>
+{%- endunless -%}

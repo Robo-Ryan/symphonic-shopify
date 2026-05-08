@@ -1,3 +1,10 @@
+{%- assign audience_skip = false -%}
+{%- if customer.tags contains 'b2b' -%}
+  {%- if product.metafields.custom.wholesale != true -%}{%- assign audience_skip = true -%}{%- endif -%}
+{%- else -%}
+  {%- if product.metafields.custom.wholesale == true -%}{%- assign audience_skip = true -%}{%- endif -%}
+{%- endif -%}
+{%- unless audience_skip -%}
 <div class="product-card">
 
 <div style="margin-bottom: 5px;" class="product-item__image-wrapper {% if settings.show_secondary_image and product.media.size > 1 and hide_secondary_image != true %}product-item__image-wrapper--multiple{% endif %}">
@@ -189,3 +196,4 @@
 </div>
 
 </div>
+{%- endunless -%}

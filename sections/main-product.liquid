@@ -1,3 +1,15 @@
+{%- comment -%}
+  B2B GUARD: skip on quick-buy drawers/popovers (overlay contexts, not full product pages).
+{%- endcomment -%}
+{%- unless template.suffix contains 'quick-buy' -%}
+  {%- if customer.tags contains 'b2b' -%}
+    {%- assign is_wholesale = product.metafields.custom.wholesale -%}
+    {%- unless is_wholesale -%}
+      <script>window.location.replace('{{ routes.root_url }}');</script>
+    {%- endunless -%}
+  {%- endif -%}
+{%- endunless -%}
+
 {%- unless template.suffix contains 'quick-buy' -%}
   <style>
     #shopify-section-{{ section.id }} {

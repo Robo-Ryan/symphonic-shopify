@@ -1,3 +1,14 @@
+{%- comment -%}
+  B2B GUARD: B2B customers may only view products flagged wholesale via metafields.custom.wholesale = true.
+  Non-wholesale pages redirect to home. buy_buttons renders for all customers on wholesale products.
+{%- endcomment -%}
+{%- if customer.tags contains 'b2b' -%}
+  {%- assign is_wholesale = product.metafields.custom.wholesale -%}
+  {%- unless is_wholesale -%}
+    <script>window.location.replace('{{ routes.root_url }}');</script>
+  {%- endunless -%}
+{%- endif -%}
+
 {%- unless template.suffix contains 'quick-buy' -%}
     <style>
       #shopify-section-{{ section.id }} {

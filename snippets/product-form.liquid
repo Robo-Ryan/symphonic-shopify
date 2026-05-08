@@ -370,7 +370,16 @@
       ----------------------------------------------------------------------------------------------------------------
       {%- endcomment -%}
       {%- when 'buy_buttons' -%}
+        {%- comment -%}Intentionally no B2B gate here — buy buttons show for all customers including B2B on wholesale products.{%- endcomment -%}
         {%- render 'buy-buttons', product: product, product_form_id: product_form_id, shopify_attributes: block.shopify_attributes, show_quantity: block.settings.show_quantity, show_gift_card_recipient: block.settings.show_gift_card_recipient, show_payment_button: block.settings.show_payment_button -%}
+
+      {%- comment -%}
+      ----------------------------------------------------------------------------------------------------------------
+      WHOLESALE CONTACT — suppressed. buy_buttons shows for all customers on wholesale products.
+      Do not render a "contact to order" gate; the standard ATC flow handles B2B checkout natively.
+      ----------------------------------------------------------------------------------------------------------------
+      {%- endcomment -%}
+      {%- when 'wholesale_contact' -%}
         
       {%- comment -%}
       ----------------------------------------------------------------------------------------------------------------

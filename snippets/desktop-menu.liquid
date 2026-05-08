@@ -27,12 +27,24 @@
               {%- capture image_setting -%}image_{{ i }}{%- endcapture -%}
 
               {%- if mega_menu_block.settings[image_setting] != blank -%}
-                {%- assign images_count = images_count | plus: 1 -%}
-
                 {%- capture image_heading_setting -%}image_{{ i }}_heading{%- endcapture -%}
                 {%- capture image_text_setting -%}image_{{ i }}_text{%- endcapture -%}
                 {%- capture image_link_setting -%}image_{{ i }}_link{%- endcapture -%}
                 {%- capture image_product_setting -%}image_{{ i }}_product{%- endcapture -%}
+
+                {%- comment -%}B2B audience gate: hide curated product cards that don't match the customer audience.{%- endcomment -%}
+                {%- assign mm_audience_skip = false -%}
+                {%- if mega_menu_block.settings[image_product_setting] != blank -%}
+                  {%- assign mm_curated_product = mega_menu_block.settings[image_product_setting] -%}
+                  {%- if customer.tags contains 'b2b' -%}
+                    {%- if mm_curated_product.metafields.custom.wholesale != true -%}{%- assign mm_audience_skip = true -%}{%- endif -%}
+                  {%- else -%}
+                    {%- if mm_curated_product.metafields.custom.wholesale == true -%}{%- assign mm_audience_skip = true -%}{%- endif -%}
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- unless mm_audience_skip -%}
+                {%- assign images_count = images_count | plus: 1 -%}
 
                 {%- capture image_push -%}
                   <div class="mega-menu__image-wrapper">
@@ -64,6 +76,7 @@
                     {{- image_push -}}
                   </div>
                 {%- endif -%}
+                {%- endunless -%}
               {%- endif -%}
             {%- endfor -%}
           {%- endcapture -%}

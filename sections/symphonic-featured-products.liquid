@@ -1,8 +1,16 @@
 {%- capture featured_products -%}
 {%- for prod in section.settings.featured_collection.products -%}
+  {%- assign audience_skip = false -%}
+  {%- if customer.tags contains 'b2b' -%}
+    {%- if prod.metafields.custom.wholesale != true -%}{%- assign audience_skip = true -%}{%- endif -%}
+  {%- else -%}
+    {%- if prod.metafields.custom.wholesale == true -%}{%- assign audience_skip = true -%}{%- endif -%}
+  {%- endif -%}
+  {%- unless audience_skip -%}
     <div class="featured-products__slide">
         {%- render 'symphonic-product-card', product: prod -%}
     </div>
+  {%- endunless -%}
 {%- endfor -%}
 {%- endcapture -%}
 <div class="featured-products__container">
