@@ -410,7 +410,7 @@
                   </ul>
                 {%- endif -%}
                 {%- if feature.popup_url != blank -%}
-                  <p class="tp-popup-cta"><a href="#feature-popup-{{ forloop.index }}" class="pop-up-cta" data-heading="{{ feature.popup_heading }}" data-key="{{ feature.popup_content_key }}" rel="nofollow">{% if feature.popup_cta_text != blank %}{{ feature.popup_cta_text }}{% else %}More info{% endif %}</a></p>
+                  <p class="tp-popup-cta"><a href="#feature-popup-{{ forloop.index }}" class="pop-up-cta" data-heading="{{ feature.popup_heading }}" data-key="{{ feature.popup_content_key }}" data-url="{{ feature.popup_url }}" rel="nofollow">{% if feature.popup_cta_text != blank %}{{ feature.popup_cta_text }}{% else %}More info{% endif %}</a></p>
                 {%- endif -%}
                 </div>
               </div>

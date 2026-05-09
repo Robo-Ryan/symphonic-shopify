@@ -387,8 +387,11 @@ var Animate_letters_options = {
             var popup_id = 'tp-' + element.hash.replace('#', '');
             var heading = element.dataset.heading;
             var key = element.dataset.key;
-            var url = '';
-            if (key == 'retinol-ingredients') {
+            var url = element.dataset.url || '';
+            if (url && url.indexOf('view=ajax') === -1) {
+                url += (url.indexOf('?') === -1 ? '?' : '&') + 'view=ajax';
+            }
+            if (!url && key == 'retinol-ingredients') {
                 url = '/pages/retinol-vitamin-c-ingredients?view=ajax';
             }
             if (url.length) {
