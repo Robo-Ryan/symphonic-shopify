@@ -1,0 +1,534 @@
+{% comment %}
+  Attempt A — Symphonic M.D. wholesale landing
+  Base styling: NextEvo (.nv26) — cream + navy + DM Serif Display + soft rounded cards
+  Content: rewritten per Cherry Robinson's PDF comments (longevity stack, BioA3, clinical chart, 4 SKUs, MOQ 6)
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  .nv26 {
+    --nv-blue: #0066CC;
+    --nv-navy: #0A2540;
+    --nv-cream: #F7F3EA;
+    --nv-white: #FFFFFF;
+    --nv-ink: #1A1A1A;
+    --nv-muted: #6B6B6B;
+    --nv-line: #E8E3D6;
+    --shadow-card: 0 27px 104px rgba(10, 37, 64, 0.08);
+    --shadow-soft: 0 8px 30px rgba(10, 37, 64, 0.06);
+    --radius-card: 36px;
+    --radius-pill: 999px;
+    --gap-section: 120px;
+    --font-serif: 'DM Serif Display', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+    font-family: var(--font-sans);
+    background: var(--nv-cream);
+    color: var(--nv-ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .nv26 *, .nv26 *::before, .nv26 *::after { box-sizing: border-box; }
+  .nv26 a { color: inherit; }
+  .nv26 section[id] { scroll-margin-top: 120px; }
+  html { scroll-behavior: smooth; }
+  .nv26 h1, .nv26 h2, .nv26 h3, .nv26 h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-transform: none;
+    text-align: left;
+  }
+  .nv26 h1 em, .nv26 h2 em, .nv26 h3 em { font-style: italic; }
+  .nv26 .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  .nv26 .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 26px; border-radius: var(--radius-pill);
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease;
+    cursor: pointer; border: none; font-family: var(--font-sans);
+  }
+  .nv26 .btn-primary { background: var(--nv-navy) !important; color: var(--nv-white) !important; box-shadow: var(--shadow-soft); border: 1px solid var(--nv-navy) !important; }
+  .nv26 .btn-primary:hover { background: #133459 !important; color: var(--nv-white) !important; transform: translateY(-1px); box-shadow: 0 12px 32px rgba(10,37,64,0.22); }
+  .nv26 .btn-blue { background: var(--nv-blue) !important; color: var(--nv-white) !important; box-shadow: var(--shadow-soft); border: 1px solid var(--nv-blue) !important; }
+  .nv26 .btn-blue:hover { background: #1a7ad6 !important; color: var(--nv-white) !important; transform: translateY(-1px); }
+  .nv26 .btn-ghost { background: var(--nv-white) !important; color: var(--nv-ink) !important; box-shadow: var(--shadow-soft); border: 1px solid var(--nv-line) !important; }
+  .nv26 .btn-ghost:hover { background: var(--nv-cream) !important; color: var(--nv-navy) !important; border-color: var(--nv-navy) !important; transform: translateY(-1px); }
+
+  .nv26 .eyebrow {
+    display: inline-block;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--nv-blue);
+    padding: 8px 16px;
+    border: 1px solid var(--nv-blue);
+    border-radius: var(--radius-pill);
+    margin-bottom: 28px;
+  }
+
+  .nv26 .hero { padding: 100px 0 60px; }
+  .nv26 h1.display {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(56px, 8.4vw, 128px);
+    line-height: 0.94; letter-spacing: -0.035em;
+    color: var(--nv-navy); max-width: 16ch; margin: 0;
+  }
+  .nv26 h1.display em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .hero-sub { font-size: 22px; color: var(--nv-muted); max-width: 60ch; margin: 32px 0 0; line-height: 1.45; }
+  .nv26 .hero-tagline {
+    margin-top: 14px; font-family: var(--font-serif); font-size: 22px;
+    color: var(--nv-navy); letter-spacing: -0.005em;
+  }
+  .nv26 .hero-tagline em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .hero-ctas { display: flex; gap: 14px; margin-top: 44px; flex-wrap: wrap; }
+
+  .nv26 .stats {
+    margin-top: 80px; background: var(--nv-white);
+    border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+    padding: 56px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .nv26 .stat { padding: 0 16px; border-left: 2px solid var(--nv-blue); }
+  .nv26 .stat:first-child { padding-left: 0; border-left: none; }
+  .nv26 .stat-num { font-family: var(--font-serif); font-size: clamp(48px, 6.2vw, 80px); line-height: 1; color: var(--nv-navy); letter-spacing: -0.03em; }
+  .nv26 .stat-num em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .stat-label { margin-top: 14px; font-size: 14px; color: var(--nv-muted); letter-spacing: 0.04em; max-width: 28ch; }
+
+  /* Pillars / science explainer */
+  .nv26 .pillars { padding: var(--gap-section) 0 60px; }
+  .nv26 .section-head { text-align: center; margin-bottom: 56px; }
+  .nv26 .section-head h2 { font-family: var(--font-serif); font-size: clamp(40px, 5vw, 68px); color: var(--nv-navy); line-height: 1.05; letter-spacing: -0.025em; max-width: 22ch; margin: 16px auto 0; }
+  .nv26 .section-head h2 em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .section-head .lede { max-width: 64ch; margin: 24px auto 0; font-size: 18px; color: var(--nv-muted); text-align: center; line-height: 1.55; }
+
+  .nv26 .pillar-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; }
+  .nv26 .pillar-card { background: var(--nv-white); border-radius: var(--radius-card); box-shadow: var(--shadow-card); padding: 48px; }
+  .nv26 .pillar-card h3 { font-family: var(--font-serif); font-size: 32px; color: var(--nv-navy); margin: 0 0 16px; letter-spacing: -0.015em; line-height: 1.1; }
+  .nv26 .pillar-card h3 em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .pillar-card p { font-size: 16px; color: var(--nv-muted); line-height: 1.6; margin: 0 0 14px; }
+  .nv26 .pillar-card .tag {
+    display: inline-block; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--nv-blue); background: rgba(0,102,204,0.06);
+    padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 20px;
+  }
+
+  /* Clinical results chart */
+  .nv26 .results { padding: var(--gap-section) 0 60px; }
+  .nv26 .results-card { background: var(--nv-white); border-radius: var(--radius-card); box-shadow: var(--shadow-card); overflow: hidden; }
+  .nv26 .result-row {
+    display: grid; grid-template-columns: 1.4fr 1fr;
+    gap: 32px; padding: 36px 40px; align-items: center;
+    border-bottom: 1px solid var(--nv-line);
+  }
+  .nv26 .result-row:last-child { border-bottom: none; }
+  .nv26 .result-name { font-family: var(--font-serif); font-size: 24px; color: var(--nv-navy); line-height: 1.2; letter-spacing: -0.01em; }
+  .nv26 .result-name em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .result-ind { display: block; margin-top: 8px; font-family: var(--font-sans); font-size: 13px; color: var(--nv-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  .nv26 .result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .nv26 .result-stat .num { font-family: var(--font-serif); font-size: 44px; color: var(--nv-blue); line-height: 1; letter-spacing: -0.02em; }
+  .nv26 .result-stat .lab { font-size: 13px; color: var(--nv-muted); margin-top: 8px; line-height: 1.4; }
+  .nv26 .results-foot {
+    background: var(--nv-cream); padding: 24px 40px;
+    font-size: 13px; color: var(--nv-muted); line-height: 1.5;
+  }
+
+  /* Bundle (4 SKUs) */
+  .nv26 .bundle { padding: var(--gap-section) 0 60px; }
+  .nv26 .bundle-wrap { background: var(--nv-navy); color: var(--nv-cream); border-radius: var(--radius-card); padding: 80px 64px; box-shadow: var(--shadow-card); }
+  .nv26 .bundle-head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 56px; }
+  .nv26 .bundle-head .eyebrow { color: var(--nv-cream); border-color: var(--nv-cream); }
+  .nv26 .bundle-head h2 { font-family: var(--font-serif); font-size: clamp(40px, 5vw, 72px); line-height: 1.0; letter-spacing: -0.025em; margin: 0; color: var(--nv-cream) !important; }
+  .nv26 .bundle-head h2 em { font-style: italic; color: #6BA4D9; }
+  .nv26 .bundle-head p { font-size: 18px; color: rgba(247,243,234,0.78); line-height: 1.5; margin: 0; }
+
+  .nv26 .bundle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .nv26 .bundle-card { background: var(--nv-cream); color: var(--nv-ink); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; }
+  .nv26 .bundle-img { aspect-ratio: 1/1; background: var(--nv-white); border-radius: 16px; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .nv26 .bundle-img .ph { font-family: var(--font-serif); font-style: italic; color: var(--nv-blue); opacity: 0.5; font-size: 38px; }
+  .nv26 .bundle-no { font-family: var(--font-serif); font-style: italic; color: var(--nv-blue); font-size: 16px; margin-bottom: 6px; }
+  .nv26 .bundle-card h3 { font-family: var(--font-serif); font-weight: 400; font-size: 22px; line-height: 1.15; color: var(--nv-navy); margin: 0 0 10px; letter-spacing: -0.01em; }
+  .nv26 .bundle-card .strength { font-size: 12px; color: var(--nv-blue); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 12px; }
+  .nv26 .bundle-card p { font-size: 14px; color: var(--nv-muted); line-height: 1.5; margin: 0; }
+
+  .nv26 .bundle-includes { margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(247,243,234,0.18); display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .nv26 .bundle-includes .label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(247,243,234,0.6); margin-bottom: 8px; }
+  .nv26 .bundle-includes .items { font-family: var(--font-serif); font-size: 22px; color: var(--nv-cream); line-height: 1.3; }
+
+  /* Why retailers */
+  .nv26 .why { padding: var(--gap-section) 0 60px; }
+  .nv26 .why-table { background: var(--nv-white); border-radius: var(--radius-card); box-shadow: var(--shadow-card); overflow: hidden; }
+  .nv26 .why-row { display: grid; grid-template-columns: 80px 1fr 2fr; align-items: center; padding: 32px 40px; border-bottom: 1px solid var(--nv-line); }
+  .nv26 .why-row:last-child { border-bottom: none; }
+  .nv26 .why-num { font-family: var(--font-serif); font-style: italic; color: var(--nv-blue); font-size: 28px; }
+  .nv26 .why-key { font-family: var(--font-serif); font-size: 26px; color: var(--nv-navy); letter-spacing: -0.01em; }
+  .nv26 .why-detail { font-size: 16px; color: var(--nv-muted); line-height: 1.5; }
+
+  /* How */
+  .nv26 .how { padding: var(--gap-section) 0 60px; }
+  .nv26 .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .nv26 .step { background: var(--nv-white); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); padding: 40px 32px; text-decoration: none; color: inherit; display: block; }
+  .nv26 .step-no { font-family: var(--font-serif); font-style: italic; color: var(--nv-blue); font-size: 22px; margin-bottom: 16px; }
+  .nv26 .step h3 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; color: var(--nv-navy); line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 12px; }
+  .nv26 .step p { font-size: 15px; color: var(--nv-muted); line-height: 1.5; margin: 0; }
+
+  /* Apply */
+  .nv26 .closer { padding: var(--gap-section) 0; }
+  .nv26 .closer-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+  .nv26 .closer h2 { font-family: var(--font-serif); font-size: clamp(44px, 5vw, 76px); color: var(--nv-navy); line-height: 1.05; letter-spacing: -0.025em; max-width: 14ch; margin: 0; }
+  .nv26 .closer h2 em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .closer-lede { font-size: 18px; color: var(--nv-muted); margin: 20px 0 0; max-width: 44ch; }
+  .nv26 .closer-meta { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--nv-line); font-size: 14px; color: var(--nv-muted); line-height: 1.6; }
+  .nv26 .closer-meta strong { color: var(--nv-navy); font-weight: 500; }
+
+  .nv26 .apply-card { background: var(--nv-white); border-radius: var(--radius-card); box-shadow: var(--shadow-card); padding: 48px; }
+  .nv26 .apply-card h3 { font-family: var(--font-serif); font-weight: 400; font-size: 32px; line-height: 1.1; letter-spacing: -0.015em; color: var(--nv-navy); margin: 0 0 28px; }
+  .nv26 .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .nv26 .field label { font-size: 13px; font-weight: 500; color: var(--nv-navy); letter-spacing: 0.02em; }
+  .nv26 .field label .req { color: var(--nv-blue); margin-left: 2px; }
+  .nv26 .field label .opt { font-weight: 400; color: var(--nv-muted); margin-left: 6px; font-size: 12px; }
+  .nv26 .field input, .nv26 .field textarea { font-family: var(--font-sans); font-size: 15px; color: var(--nv-ink); background: var(--nv-cream); border: 1px solid transparent; border-radius: 14px; padding: 14px 18px; transition: border-color .15s ease, background .15s ease; width: 100%; }
+  .nv26 .field input:focus, .nv26 .field textarea:focus { outline: none; border-color: var(--nv-blue); background: var(--nv-white); }
+  .nv26 .field textarea { resize: vertical; min-height: 110px; }
+  .nv26 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .nv26 .apply-foot small { display: block; margin-top: 14px; color: var(--nv-muted); font-size: 13px; }
+  .nv26 .already-member { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--nv-line); font-size: 14px; color: var(--nv-muted); text-align: center; }
+  .nv26 .already-member a { color: var(--nv-blue); text-decoration: none; font-weight: 500; }
+  .nv26 .form-success { background: var(--nv-navy); color: var(--nv-cream); padding: 32px 28px; border-radius: 18px; margin-bottom: 28px; text-align: center; box-shadow: 0 12px 40px rgba(10,37,64,0.18); }
+  .nv26 .form-success .check-mark { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--nv-blue); color: var(--nv-white); border-radius: 50%; margin-bottom: 16px; font-size: 24px; font-weight: 600; }
+  .nv26 .form-success h4 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; color: var(--nv-cream); margin: 0 0 10px; letter-spacing: -0.01em; }
+  .nv26 .form-success h4 em { font-style: italic; color: #6BA4D9; }
+  .nv26 .form-success p { font-size: 15px; color: rgba(247,243,234,0.85); margin: 0; line-height: 1.5; }
+  .nv26 .form-errors { background: rgba(199, 0, 0, 0.06); color: #8a1f1f; padding: 18px 22px; border-radius: 14px; margin-bottom: 24px; font-size: 14px; }
+
+  /* Founders */
+  .nv26 .founders { background: var(--nv-white); padding: 80px 0; border-top: 1px solid var(--nv-line); }
+  .nv26 .founders .container { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center; }
+  .nv26 .founders h3 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(30px, 3.4vw, 44px); color: var(--nv-navy); line-height: 1.15; letter-spacing: -0.015em; margin: 0; }
+  .nv26 .founders h3 em { font-style: italic; color: var(--nv-blue); }
+  .nv26 .founders p { font-size: 16px; color: var(--nv-muted); line-height: 1.6; margin: 16px 0 0; }
+
+  @media (max-width: 980px) {
+    .nv26 .bundle-grid { grid-template-columns: repeat(2, 1fr); }
+    .nv26 .pillar-grid { grid-template-columns: 1fr; }
+    .nv26 .result-row { grid-template-columns: 1fr; gap: 18px; }
+  }
+  @media (max-width: 860px) {
+    .nv26 .stats, .nv26 .how-grid, .nv26 .bundle-grid { grid-template-columns: 1fr; }
+    .nv26 .stats { padding: 32px; }
+    .nv26 .bundle-wrap { padding: 40px 28px; }
+    .nv26 .bundle-head, .nv26 .closer-grid, .nv26 .founders .container { grid-template-columns: 1fr; gap: 32px; }
+    .nv26 .bundle-includes { grid-template-columns: 1fr; }
+    .nv26 .why-row { grid-template-columns: 1fr; gap: 8px; padding: 24px; }
+    .nv26 .field-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="nv26">
+
+  {%- comment -%} ============= HERO ============= {%- endcomment -%}
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Wholesale Partner Program</span>
+      <h1 class="display">Meet your new <em>longevity</em> stack.</h1>
+      <p class="hero-tagline">Physician Strength. <em>Precision Formulated.</em> Amplified Effects.</p>
+      <p class="hero-sub">Cosmeceutical treatments that combine clinical-grade actives — retinoids, vitamin C, peptides, AHAs — at concentrations that work, without the irritation, redness, or cycling.</p>
+      <div class="hero-ctas">
+        <a href="#apply" class="btn btn-primary">Apply to View Wholesale Prices</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num"><em>0</em></div>
+          <div class="stat-label">Adverse events reported across IRB-registered clinical trials.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><em>61</em>%</div>
+          <div class="stat-label">Reduction in age spot intensity by week 12 (Brassica · Pea · Red Algae · Lactic AHC).</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">BioA<em>3</em></div>
+          <div class="stat-label">Proprietary anti-inflammatory, anti-microbial, anti-oxidant complex.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= STOP CHOOSING / SKIN STREAMING / IMMUNOMODULATORS ============= {%- endcomment -%}
+  <section class="pillars">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The Difference</span>
+        <h2>Stop choosing between <em>efficacy</em> and tolerability.</h2>
+        <p class="lede">A progressive collective of academics, doctors, and researchers solving more skin concerns for more people, by attacking the root cause of inflammation and activating the skin's own immunomodulators to help it heal.</p>
+      </div>
+
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <span class="tag">Immunomodulators 101</span>
+          <h3>Meet <em>BioA3</em>.</h3>
+          <p>Our proprietary bio-functional complex is a potent anti-inflammatory, anti-microbial, and anti-oxidant agent. It lets us combine ingredients that conventionally shouldn't work together, amplifying each other's effects.</p>
+          <p>Think of it as a bodyguard: ensuring stability, enhancement, and efficacy of active compounds while shielding the skin from adverse reactions.</p>
+        </div>
+        <div class="pillar-card">
+          <span class="tag">Bye Bye Cycling</span>
+          <h3>Enter the age of <em>Skin Streaming.</em></h3>
+          <p>Fewer products that do more, with fewer ingredient stressors on the skin. Retinol, vitamin C, AHAs, and peptides at clinical concentrations. No irritation. No barrier disruption. No cycling between products to manage sensitivity.</p>
+          <p>One treatment. Endless benefits.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= CLINICAL RESULTS CHART ============= {%- endcomment -%}
+  <section class="results">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Clinically Proven</span>
+        <h2>Human data, on every <em>indication.</em></h2>
+        <p class="lede">IRB-registered. Conducted at independent pharmaceutical research facilities. Graded by board-certified dermatologists across diverse Fitzpatrick tones. Zero adverse events.</p>
+      </div>
+
+      <div class="results-card">
+        <div class="result-row">
+          <div>
+            <div class="result-name">Retinol <em>::</em> Vitamin C Treatment</div>
+            <span class="result-ind">Blemishes · Discoloration · Texture</span>
+          </div>
+          <div class="result-stats">
+            <div class="result-stat"><div class="num">39%</div><div class="lab">Reduction in global appearance of blemishes — wk 8</div></div>
+            <div class="result-stat"><div class="num">41%</div><div class="lab">Improvement in skin texture / roughness — wk 8</div></div>
+          </div>
+        </div>
+        <div class="result-row">
+          <div>
+            <div class="result-name">6 Peptides <em>::</em> Amino Acids Cream</div>
+            <span class="result-ind">Lines + Wrinkles · Sagging · Dull Tone</span>
+          </div>
+          <div class="result-stats">
+            <div class="result-stat"><div class="num">38%</div><div class="lab">Improvement in plumpness / firmness — wk 12</div></div>
+            <div class="result-stat"><div class="num">27%</div><div class="lab">Reduction in global fine lines — wk 12</div></div>
+          </div>
+        </div>
+        <div class="result-row">
+          <div>
+            <div class="result-name">Brassica <em>::</em> Pea <em>::</em> Red Algae <em>::</em> Lactic AHC</div>
+            <span class="result-ind">Hyperpigmentation · Sunspots · Discoloration</span>
+          </div>
+          <div class="result-stats">
+            <div class="result-stat" style="grid-column: span 2;"><div class="num">61%</div><div class="lab">Reduction in age spot intensity by week 12</div></div>
+          </div>
+        </div>
+        <div class="results-foot">
+          All studies IRB-registered, conducted at independent pharmaceutical research facilities, graded by board-certified dermatologists with diverse male and female participants across all Fitzpatrick tones. Zero adverse events of any kind reported throughout the entire trial.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= ASSORTMENT (4 SKUs) ============= {%- endcomment -%}
+  <section id="bundle" class="bundle">
+    <div class="container">
+      <div class="bundle-wrap">
+        <div class="bundle-head">
+          <div>
+            <span class="eyebrow">The Retail Assortment</span>
+            <h2>Four products. <em>One shelf-ready</em> program.</h2>
+          </div>
+          <p>A streamlined, science-backed system for patients who are tired of building 10-step routines that still don't deliver. Three multi-functional heroes and a foundational cleanser.</p>
+        </div>
+
+        <div class="bundle-grid">
+          <div class="bundle-card">
+            <div class="bundle-img"><span class="ph">Rx</span></div>
+            <div class="bundle-no">No. 01</div>
+            <div class="strength">Treatment · Topical</div>
+            <h3>Retinol :: Vitamin C Treatment</h3>
+            <p>For blemishes, discoloration, and poor texture. Clinical concentrations, no cycling required.</p>
+          </div>
+          <div class="bundle-card">
+            <div class="bundle-img"><span class="ph">Rx</span></div>
+            <div class="bundle-no">No. 02</div>
+            <div class="strength">Cream · 6 Peptides</div>
+            <h3>6 Peptides :: Amino Acids Cream</h3>
+            <p>For fine lines, slack/sagging skin, and dull, uneven tone. Plumpness in 12 weeks.</p>
+          </div>
+          <div class="bundle-card">
+            <div class="bundle-img"><span class="ph">Rx</span></div>
+            <div class="bundle-no">No. 03</div>
+            <div class="strength">Emulsion · Brightening</div>
+            <h3>Brassica :: Pea :: Red Algae :: Lactic AHC</h3>
+            <p>For hyperpigmentation, sunspots, discoloration. 61% age-spot reduction by week 12.</p>
+          </div>
+          <div class="bundle-card">
+            <div class="bundle-img"><span class="ph">Rx</span></div>
+            <div class="bundle-no">No. 04</div>
+            <div class="strength">Cleanser · Daily</div>
+            <h3>Foundational Cleanser</h3>
+            <p>The barrier-respecting base that primes skin for everything that follows.</p>
+          </div>
+        </div>
+
+        <div class="bundle-includes">
+          <div>
+            <div class="label">Order Minimums</div>
+            <div class="items"><strong style="color:#6BA4D9;font-weight:400;">6 units</strong> initial order · <strong style="color:#6BA4D9;font-weight:400;">6 units</strong> to replenish</div>
+            <div class="label" style="margin-top:24px;">Launch Support Includes</div>
+            <div class="items" style="font-size:18px;">Product testers · POS · educational materials · Dedicated partner specialist</div>
+          </div>
+          <a href="#apply" class="btn btn-blue">Apply to View Wholesale Prices</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= WHY RETAILERS ============= {%- endcomment -%}
+  <section class="why">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Built for Retail</span>
+        <h2>A partnership designed to <em>de-risk</em> your shelf.</h2>
+      </div>
+      <div class="why-table">
+        <div class="why-row">
+          <div class="why-num">01</div>
+          <div class="why-key">6 to start, 6 to replenish</div>
+          <div class="why-detail">A 6-unit initial order. 6-unit minimums on every reorder. No long-term contracts, no annual volume commitments. Scale at your store's pace.</div>
+        </div>
+        <div class="why-row">
+          <div class="why-num">02</div>
+          <div class="why-key">Full launch support</div>
+          <div class="why-detail">Product testers, educational POS, and a dedicated partner specialist from day one.</div>
+        </div>
+        <div class="why-row">
+          <div class="why-num">03</div>
+          <div class="why-key">Clinical credibility, on-shelf</div>
+          <div class="why-detail">Peer-reviewed research, IRB-registered trials, third-party batch testing. We show &amp; tell our credibility at every opportunity, across every touchpoint.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= HOW IT WORKS ============= {%- endcomment -%}
+  <section class="how">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Getting Started</span>
+        <h2>Three steps to your <em>first order.</em></h2>
+      </div>
+      <div class="how-grid">
+        <a href="#apply" class="step">
+          <div class="step-no">Step 01</div>
+          <h3>Apply for portal access</h3>
+          <p>Submit the short form below. We'll send back wholesale pricing, the full catalog, and portal credentials within one business day.</p>
+        </a>
+        <div class="step">
+          <div class="step-no">Step 02</div>
+          <h3>Review pricing &amp; assortment</h3>
+          <p>Your dedicated partner specialist walks you through assortment, launch timing, and marketing materials.</p>
+        </div>
+        <div class="step">
+          <div class="step-no">Step 03</div>
+          <h3>Place your first order</h3>
+          <p>Receive the assortment, testers, and POS materials. We support your launch through your first reorder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= APPLY ============= {%- endcomment -%}
+  <section id="apply" class="closer">
+    <div class="container">
+      <div class="closer-grid">
+        <div>
+          <span class="eyebrow">Apply for Access</span>
+          <h2>Ready to put it <em>on your shelf?</em></h2>
+          <p class="closer-lede">Tell us about your store. We'll send back wholesale pricing, the full catalog, and portal credentials within one business day.</p>
+          <div class="closer-meta">
+            <strong>What you'll receive:</strong><br>
+            Live wholesale pricing &amp; margin sheets · Full catalog beyond the starter assortment · MOQ &amp; replenishment terms · A dedicated partner specialist · Testers &amp; educational POS on first order.
+          </div>
+        </div>
+
+        <div class="apply-card">
+          <span class="eyebrow">New Partner Application</span>
+          <h3>Apply for portal access.</h3>
+
+          {% form 'contact', id: 'ContactForm', class: 'contact-form' %}
+            <input type="hidden" name="contact[B2B_Application]" value="Symphonic M.D. — new B2B customer application to review" />
+
+            {%- if form.posted_successfully? -%}
+              <div class="form-success" id="form-success">
+                <div class="check-mark">✓</div>
+                <h4>Application <em>received.</em></h4>
+                <p>Thanks. We'll be in touch within one business day with portal access, wholesale pricing, and the full catalog.</p>
+              </div>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  var el = document.getElementById('form-success');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+              </script>
+            {%- endif -%}
+
+            {%- if form.errors -%}
+              <div class="form-errors">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+
+            <div class="field-row">
+              <div class="field">
+                <label for="ContactForm-company">Company Name <span class="req">●</span></label>
+                <input type="text" id="ContactForm-company" name="contact[company-name]" placeholder="Your store or business" required />
+              </div>
+              <div class="field">
+                <label for="ContactForm-name">Your Name <span class="req">●</span></label>
+                <input type="text" id="ContactForm-name" name="contact[your-name]" placeholder="First and last name" required />
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="ContactForm-email">Email <span class="req">●</span></label>
+                <input type="email" id="ContactForm-email" name="contact[email]" placeholder="you@yourstore.com" required />
+              </div>
+              <div class="field">
+                <label for="ContactForm-url">Website / Store URL <span class="opt">Optional</span></label>
+                <input type="text" id="ContactForm-url" name="contact[url]" placeholder="yourstore.com" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="ContactForm-comments">Tell us about your store <span class="opt">Optional</span></label>
+              <textarea id="ContactForm-comments" name="contact[comments]" placeholder="Store type, location, categories you carry, ideal launch timing. Anything that helps us prep your account."></textarea>
+            </div>
+
+            <div class="apply-foot">
+              <button type="submit" class="btn btn-primary" style="width:100%;padding:16px 26px;font-size:15px;">Apply to View Wholesale Prices</button>
+              <small>By applying you'll receive product news, education, and wholesale updates. Unsubscribe anytime.</small>
+            </div>
+
+            <div class="already-member">
+              Already a wholesale partner? <a href="/account/login">Sign in to the portal →</a>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ============= FOUNDERS ============= {%- endcomment -%}
+  <section class="founders">
+    <div class="container">
+      <div>
+        <span class="eyebrow">The Team Behind It</span>
+        <h3>Built by <em>physicians, researchers,</em> and formulators.</h3>
+      </div>
+      <div>
+        <p>Symphonic M.D. is a progressive collective of leading academics, doctors, researchers, and developers whose purpose is to challenge skincare conventions and safely solve more concerns for more people, without triggering any adverse reactions. Our BioA3 complex is the result: peer-reviewed, IRB-registered, and held to the same standards as the OTC products you already stock.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
